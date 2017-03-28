@@ -1,0 +1,64 @@
+<!DOCTYPE  html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" type="image/x-icon" href="static/images/main.png">
+    <title>Link Curation - Register</title>
+    
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="static/js/materialize.js"></script>
+    <script src="static/js/init.js"></script>
+  
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen"/>
+
+    <style>
+        #body{
+            min-height: calc(100vh - 10px);
+        }
+    </style>
+
+</head>
+<div id="body" style="text-align:center;margin-left:auto; margin-right:auto">
+    <div>{% include 'header.html' %}</div>
+    
+    <div id="body">
+    <br><br><br>
+    <div class="container" style="width:20%"> 
+        <div class="modal-header">
+            <h1 class="text-center">Register</h1>
+        </div>
+    
+        <div class="modal-body">
+      
+            <form class="form col-md-12 center-block" action="register" method="POST" >
+                <div class="form-group">
+                    <input id="name" name="name" type="text" class="form-control input-lg" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <input id="uname" name="uname" type="email" class="form-control input-lg" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input id="pw" name="pw" type="password" class="form-control input-lg" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <button style="text-align:center;margin-left:auto; margin-right:auto" id = "submit-btn" class="btn btn-primary btn-lg btn-block">Create</button>
+                </div>
+            </form>
+            <br><br><br><br><br><br>
+            <form class="form col-md-12 center-block" action="login" method="GET" >
+                <div class="form-group">
+                    <button style="text-align:center;margin-left:auto; margin-right:auto" id = "register-btn" class="btn btn-primary btn-lg btn-block btn-gray">Login</button>
+                </div>
+            </form>
+            <p style="text-align:center;margin-left:auto; margin-right:auto">{{ rsp }}</p>
+        </div>
+    </div>
+    </center>
+    </div>
+    <div>{% include 'footer.html' %}</div>
+</body>
+</html>

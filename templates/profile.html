@@ -1,0 +1,199 @@
+<!DOCTYPE  html>
+<html lang="en">
+<head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" type="image/x-icon" href="static/images/main.png">
+    <title>Link Curation - Profile</title>
+    
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="static/js/materialize.js"></script>
+    <script src="static/js/init.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen"/>
+    
+    <script>
+        $(document).ready(function () {
+        
+            // Code to get tags and other profile info
+            var p = '{{server}}'.concat("/user");
+            $.ajax({
+                method: 'GET',
+                url: p,
+                contentType: 'application/json',
+                success: function(data){
+                
+                    // Update tags and create necessary variables for chart
+                    $('#nameHeading').text("Welcome, "+data.name)
+                    
+                    // Prepare data for chart
+                    var rows = [['Museum', 'Matched', 'Unmatched', 'Not Sure', 'Not curated', 
+                                    {role:'annotation'} ]];
+                    var totals = {}
+    
+                    for(i = 0; i < data.keys.length; i++) {
+                        $('#'+data.tags[i]).prop('checked', true);
+                        totals[data.keys[i]] = 0;
+                        var j = data.payload[data.keys[i]];
+                        var unanswered = j["totalQ"] - j["matchedQ"] - j["unmatchedQ"] - j["unconcludedQ"];
+                        rows.push([data.keys[i],j["matchedQ"],j["unmatchedQ"],j["unconcludedQ"],unanswered,'']);
+                    }
+                    
+                    // Scale values to the percentage
+                    for(var i = 0; i < data.keys.length ; i++){
+                        for(var j=1;j<5;j++){
+                            totals[data.keys[i]] = totals[data.keys[i]] + rows[i+1][j];
+                        }
+                        for(var j=1;j<5;j++){
+                            rows[i+1][j] = Math.round(100*rows[i+1][j]/totals[data.keys[i]]);
+                        }
+                        
+                        // Custom tool tip for all 
+                        var tooltip = '<div style="padding:5px 5px 5px 5px;"><b>'+data.keys[i].toUpperCase()+'</b></br></br>'+
+                                    '<table style="border:1px solid black"><tr><td>status</td><td>count</td><td>percentage</td></tr>'+
+                                    '<tr><td>Matched</td><td>'+rows[i+1][1]+'</td><td>'+rows[i+1][1]*totals[data.keys[i]]/100+'%</td></tr>'+
+                                    '<tr><td>Matched</td><td>'+rows[i+1][2]+'</td><td>'+rows[i+1][2]*totals[data.keys[i]]/100+'%</td></tr>'+
+                                    '<tr><td>Matched</td><td>'+rows[i+1][3]+'</td><td>'+rows[i+1][3]*totals[data.keys[i]]/100+'%</td></tr>'+
+                                    '<tr><td>Matched</td><td>'+rows[i+1][4]+'</td><td>'+rows[i+1][4]*totals[data.keys[i]]/100+'%</td></tr></table></div>';
+
+                        rows[i+1][5] = totals[data.keys[i]]
+                        //rows[i+1][6] = "";
+                        //rows[i+1][6] = tooltip;
+                    };
+                    
+                    // Interactive chart
+                    google.charts.load("current", {packages:["corechart"]});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+                        var dataA = google.visualization.arrayToDataTable(rows);
+                        var view = new google.visualization.DataView(dataA);
+                        var options = {
+                            width: 800,
+                            height: 500,
+                            legend: { position: 'top'},
+                            bar: { groupWidth: '60%' },
+                            tooltip: {showColorCode: true},
+                            //tooltip: {isHtml: true},
+                            isStacked: 'percent',
+                            colors:['#4CAF50','#F44336','#F9A825','#d3d3d3'],
+                        };
+                        //var chart = new google.visualization.BarChart(document.getElementById("chart-"+data.keys[i]));
+                        var chart = new google.visualization.BarChart(document.getElementById("charts"));
+                        chart.draw(view, options);
+                    }
+                }
+            });
+            
+            // save tags button action listener
+            $("#save").click(function(e){
+                e.preventDefault()
+                
+                var tag_list = [];
+                
+                tag_list.push($('input[name="museums"]:checked').map(
+                    function () {return this.value;}).get());
+                var userObj = new Object();
+                userObj.tags = tag_list[0];
+                json_data = JSON.stringify(userObj);
+
+                var sv = '{{server}}'.concat("/user");
+                
+                $.ajax({
+                    method: 'PUT',
+                    url: sv,
+                    data: json_data,
+                    contentType: 'application/json',
+                    success: function(data){
+                        console.log("Tag Successfully submitted");
+                        window.location.href = "/curation";
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        #body {
+            min-height: calc(100vh - 10px);
+        }
+        #charts > div > div:nth-child(1) > div > svg > g:nth-child(4) > g:nth-child(5) > g > g > g > text:nth-child(2){
+            fill: black;
+        }
+    </style>
+    
+</head>
+<body>
+    <div> {% include 'header.html' %}</div>
+    <div id="body">
+    
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <h1 id="nameHeading" class="header center black-text">Welcome, curator</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">You can update your preferred museums below and also track progress.</h5>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="section">
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="icon-block">
+                    <br><br><br><br>
+                    {% for tag in keys %}
+                        <input id={{tag}} type="checkbox" class="filled-in" name="museums" value={{tag}} />
+                        <label for={{tag}} class="black-text"> {{museums[tag]['name']}} ( {{tag}} ) </label><br/><br/>
+                    {% endfor %}
+                    <br/><br/>
+                    <form name ="profile_tag_select">
+                        <button id = "save" type="submit" class="waves-effect waves-light btn-large">Save Changes</button>
+                    </form>
+                    <br/><br/>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <table align="center" class="highlight bordered centered">
+                    <tr><td><b>Museum</b></td>
+                    <td><b>Matched</b></td>
+                    <td><b>Unmatched</b></td>
+                    <td><b>Not Sure</b></td>
+                    <td><b>Not Curated</b></td>
+                    <td><b>Total</b></td><tr/>
+                    {% for tag in keys %}
+                        <tr>
+                            <td>{{tag}}</td>
+                            <td title=" Your contribution : {{userStats[tag]['matched']}} / Total Matched : {{ museums[tag]['matchedQ'] }}">
+                            {{ userStats[tag]['matched'] }} / {{ museums[tag]['matchedQ'] }}</td>
+                            <td title=" Your contribution : {{userStats[tag]['unmatched']}} / Total Unmatched : {{ museums[tag]['unmatchedQ'] }}">
+                            {{ userStats[tag]['unmatched'] }} / {{ museums[tag]['unmatchedQ'] }}</td>
+                            <td title=" Your contribution : {{userStats[tag]['no-conclusion']}} / Total Not Sure : {{ museums[tag]['unconcludedQ'] }}">
+                            {{ userStats[tag]['no-conclusion'] }} / {{ museums[tag]['unconcludedQ'] }}</td>
+                            <td title="Remaining Pairs">{{museums[tag]['totalQ'] - museums[tag]['matchedQ'] - museums[tag]['unmatchedQ'] - museums[tag]['unconcludedQ']}}</td>
+                            <td title="Total Pairs">{{museums[tag]['totalQ']}}</td>
+                        <tr/>
+                    {% endfor %}
+                </table>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <center><div id="charts"></div><center>
+            </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div>{% include 'footer.html' %}</div>
+</body>
+</html>

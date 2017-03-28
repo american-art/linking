@@ -1,0 +1,37 @@
+<nav class="teal">
+    <div class="nav-wrapper container">
+        <div id="logo-container" class="brand-logo thin">
+            <a href="/curation"><img src="static/images/logo.png" alt="logo" height="40" style="margin-right:2px"/>Link Curation</a>
+        </div>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/about" title="What is this tool about">About</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="/curation" title="Curate the data">Curate</a></li>
+                <li><a href="/profile" title="Update and view your profile">Profile</a></li>
+                <li><a href="/results" title="Browse/download already curated results">Results</a></li>
+            {% else %}
+                <li><a href="/curation" title="Log in the system">Login</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}" title="Log out of the system">Logout</a></li>
+            {% endif %}
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="/about" title="What is this tool about">About</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="/curation" title="Curate the data">Curate</a></li>
+                <li><a href="/profile" title="Update and view your profile">Profile</a></li>
+                <li><a href="/results" title="Browse/download already curated results">Results</a></li>
+            {% else %}
+                <li><a href="/curation" title="Log in the system">Login</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}" title="Log out of the system">Logout</a></li>
+            {% endif %}
+        </ul>
+        
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        
+    </div>
+</nav>

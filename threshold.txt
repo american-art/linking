@@ -1,0 +1,20 @@
+# Format: <museumm tag> <Confidence Value for Yes and No> <Confidence value for Not Sure>
+#aaa 1 2
+#aac 1 2
+#aat 1 2
+acm 1 2
+autry 1 2
+cbm 1 2
+ccma 1 2
+#dbpedia 1 2
+dma 1 2
+gm 1 2
+ima 1 2
+npg 1 2
+nmwa 1 2
+puam 1 2
+saam 1 2
+ulan 1 2
+#viaf 1 2
+wam 1 2
+#ycba 1 2
