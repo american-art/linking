@@ -274,22 +274,7 @@ def logout():
     if current_user.is_authenticated:
         logout_user()
     return redirect(url_for('index'))
-    
-# Handle RESTful API for exporting curation results
-@app.route('/export', methods=['PUT'])
-def export():
-    if request.method == 'PUT':
-        #print "PUT Input received: {} \n".format(request.json)
-        logging.info("PUT Input received: {}".format(request.json))
-        
-        if not current_user.is_authenticated:
-            return redirect(url_for('index'))
-        
-        # call dump results which should create dump results into json file and save as results.json
-        dumpCurationResults(request.json,None)
-        
-        return jsonify({})
-        
+
 # Handle RESTful API for getting/submitting questions
 class questMgr(Resource):
 
@@ -411,6 +396,18 @@ def populateQuestionsWithFields(questions, stats):
 
 # Handle RESTful API for submitting answer
 class downloadMgr(Resource):
+    
+    def put(self):
+        #print "PUT Input received: {} \n".format(request.json)
+        logging.info("PUT Input received: {}".format(request.json))
+        
+        if not current_user.is_authenticated:
+            return redirect(url_for('index'))
+        
+        # call dump results which should create dump results into json file and save as results.json
+        dumpCurationResults(request.json,None)
+        
+        return jsonify({},200)
     
     def get(self):
         #print "Input received: {} \n".format(request.args)

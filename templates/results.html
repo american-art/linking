@@ -33,7 +33,7 @@
             userObj.data = {"tags":tags,"codes":codes,"type":"jsonlines"};
             json_data = JSON.stringify(userObj);
             console.log(json_data);
-            var sv = '{{server}}'.concat("/export");
+            var sv = '{{server}}'.concat("/download");
             
             $.ajax({
                 method: 'PUT',
@@ -73,7 +73,7 @@
             userObj.data = {"tags":tags,"type":"triples"};
             json_data = JSON.stringify(userObj);
             console.log(json_data);
-            var sv = '{{server}}'.concat("/export");
+            var sv = '{{server}}'.concat("/download");
             
             $.ajax({
                 method: 'PUT',
