@@ -396,10 +396,6 @@ def populateQuestionsWithFields(questions, stats):
         matches = getMatches(left, right)
         #logging.info(matches)
         #pprint(matches)
-        
-        practice_tagid = dbC[dname]["tag"].find_one({'tagname':"practice"})['_id']
-        if practice_tagid in question["tags"]:
-            matches["Unmatched"]["leftT"] = "practice"
 
         if stats == True:
             s = getStats(question)
