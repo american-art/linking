@@ -50,7 +50,7 @@
                     console.log("File Created!");
                     $('#progress').hide();
                     document.getElementById("jsonlines").disabled = false;
-                    window.location.href = "/jsonlines";
+                    window.location.href = "/download?type=jsonlines";
                 },
                 error: function(xhr){
                     console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
@@ -90,7 +90,7 @@
                     console.log("File Created!");
                     $('#progress').hide();
                     document.getElementById("triples").disabled = false;
-                    window.location.href = "/triples";
+                    window.location.href = "/download?type=triples";
                 },
                 error: function(xhr){
                     console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);

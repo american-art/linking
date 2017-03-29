@@ -426,6 +426,22 @@ def retrieveProperties(uri):
         #print "Sparql endpoint threw URLError({0}): {1}\n".format(e.errno, e.strerror)
         logging.info("Sparql endpoint threw URLError({0}): {1}".format(e.errno, e.strerror))
         return None
+    except EndPointInternalError as e:
+        #print "Sparql wrapper threw EndPointInternalError({0}): {1}".format(e.errno, e.strerror)
+        logging.info("Sparql wrapper threw EndPointInternalError({0}): {1}".format(e.errno, e.strerror))
+        return None
+    except EndPointNotFound as e:
+        #print "Sparql wrapper threw EndPointNotFound({0}): {1}".format(e.errno, e.strerror)
+        logging.info("Sparql wrapper threw EndPointNotFound({0}): {1}".format(e.errno, e.strerror))
+        return None
+    except QueryBadFormed as e:
+        #print "Sparql wrapper threw QueryBadFormed({0}): {1}".format(e.errno, e.strerror)
+        logging.info("Sparql wrapper threw QueryBadFormed({0}): {1}".format(e.errno, e.strerror))
+        return None
+    except:
+        #print "Some unknown error: {}".format(sys.exc_info()[0])
+        logging.info("Some unknown error: {}".format(sys.exc_info()[0]))
+        return None
     
     data = {}
     for key in rs['results']['bindings'][0].keys():

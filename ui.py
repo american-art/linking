@@ -30,25 +30,7 @@ def datatable():
         return render_template('datatable.html',server=server[:-1],keys=sorted(museums.keys()),data=returnCurationResults())
     else:
         return redirect(url_for('index'))
-        
-@app.route('/jsonlines', methods=['GET'])
-def downloadJsonlines():
 
-    if not current_user.is_authenticated:
-        return redirect(url_for('index'))
-    
-    if request.method == 'GET':
-        return send_from_directory(directory=rootdir, filename="results.json",as_attachment=True)
-        
-@app.route('/triples', methods=['GET'])
-def downloadTriples():
-
-    if not current_user.is_authenticated:
-        return redirect(url_for('index'))
-    
-    if request.method == 'GET':
-        return send_from_directory(directory=rootdir, filename="results.nt",as_attachment=True)
-        
 @app.route('/spec')
 def show_specs():
     return render_template('spec.html',server=server[7:-1])

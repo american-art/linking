@@ -409,7 +409,27 @@ def populateQuestionsWithFields(questions, stats):
         #logging.info(output)
     return output,"success"
 
+# Handle RESTful API for submitting answer
+class downloadMgr(Resource):
+    
+    def get(self):
+        #print "Input received: {} \n".format(request.args)
+        logging.info("Input received: {}".format(request.args))
         
+        if not current_user.is_authenticated:
+            return {'error':"Couldn't authenticate user."}, 400
+
+        type = request.args.get('type')
+        if type == None:
+            return {'error':"Download type not provided."}, 400
+        else:
+            if type.lower() == "jsonlines":
+                return send_from_directory(directory=rootdir, filename="results.json",as_attachment=True)
+            elif type.lower() == "triples":
+                return send_from_directory(directory=rootdir, filename="results.nt",as_attachment=True)
+            else:
+                return {'error':"Download type not supported or invalid."}, 400
+    
 if __name__ == '__main__':
     
     # Process command line options
@@ -435,6 +455,7 @@ if __name__ == '__main__':
     api.add_resource(userMgr, '/user', endpoint='user')
     api.add_resource(questMgr, '/question', endpoint='question')
     api.add_resource(ansMgr, '/answer', endpoint='answer')
+    api.add_resource(downloadMgr, '/download', endpoint='download')
     
     # Start the app
     app.run(threaded=True,debug=False) 
