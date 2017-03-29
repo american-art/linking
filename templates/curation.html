@@ -168,6 +168,10 @@
                 success: function(data, textStatus, xhr){
                     if (data.length > 0)
                     {
+                        if (data.length > 1){
+                            Materialize.toast("Found "+data.length+" matches. Please look through all of them before submitting response.", 3000,'rounded');
+                        }
+                    
                         for(i=1;i<=maxCards;i++){
                             console.log("Populating card "+i)
                             if (i <= data.length){
@@ -283,33 +287,33 @@
             }
             else {
                 if (names.length == 1 && contains(names,"name")){
-                    tr += "<tr><td colspan='3' style='text-align:center'>None of the other fields match</td></tr>";
-                }
-            
-                for (var index in names) {
-                    var fields = false;
-                    
-                    // Special handling of Name
-                    if (names[index] == "name") {
-                        var heading = document.getElementById("cardHeading"+cid);
-                        heading.innerHTML += "<tr class='cyan darken-3 white-text'><td colspan='2' style='text-align:center'>"+values[index]+"</td></tr>"; 
-                    }
-                    else {
-                        if (!(values[index] == null || values[index] == "" || values[index] == [])){
-                            tr += "<tr>"
-                            tr += "<td style='text-align:right'>" + names[index] + "</td>";
-                            tr += "<td style='text-align:center' colspan='2'>"+ values[index] +"</td>";
-                            tr += "</tr>";
-                            fields = true;
-                        }
-                    }
-                }
-                
-                // If no  new fields were added than add standard text
-                if (!fields){
                     tr += "<tr><td colspan='3' style='text-align:center'>None of the fields match</td></tr>";
                 }
-
+                else{
+                    for (var index in names) {
+                        var fields = false;
+                        
+                        // Special handling of Name
+                        if (names[index] == "name") {
+                            var heading = document.getElementById("cardHeading"+cid);
+                            heading.innerHTML += "<tr class='cyan darken-3 white-text'><td colspan='2' style='text-align:center'>"+values[index]+"</td></tr>"; 
+                        }
+                        else {
+                            if (!(values[index] == null || values[index] == "" || values[index] == [])){
+                                tr += "<tr>"
+                                tr += "<td style='text-align:right'>" + names[index] + "</td>";
+                                tr += "<td style='text-align:center' colspan='2'>"+ values[index] +"</td>";
+                                tr += "</tr>";
+                                fields = true;
+                            }
+                        }
+                    }
+                    
+                    // If no  new fields were added than add standard text
+                    if (!fields){
+                        tr += "<tr><td colspan='3' style='text-align:center'>None of the fields match</td></tr>";
+                    }
+                }
             }
             $('#exactMatch'+cid).append(tr);
         };

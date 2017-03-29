@@ -418,23 +418,27 @@ if __name__ == '__main__':
     
     # Process command line options
     parser = OptionParser()
-    parser.add_option("-d", "--reset_dataset", dest="reset_dataset", type="string",help="Reset all data sets (True/False)")
-    parser.add_option("-u", "--reset_users", dest="reset_users", type="string", help="Reset all users (True/False)")
+    parser.add_option("-d", "--reset_dataset", dest="reset_dataset", type="string",help="Reset data set(s) (value: True/False). Use -n option to reset specific. Default is reset all.")
+    parser.add_option("-n", "--dataset_name", dest="dataset_name", type="string",help="List of dataset(s) to be reset (value: 'npg saam').")
+    parser.add_option("-u", "--reset_users", dest="reset_users", type="string", help="Reset all users (value: True/False). This works only with -d option.")
 
     resetD = False
     resetU = False
+    resetDS = [key for key in museums.keys() if key != "ulan"]
     (options, args) = parser.parse_args()
     if options.reset_dataset and options.reset_dataset.lower() == "true":
         resetD = True
     if options.reset_users and options.reset_users.lower() == "true":
         resetU = True
+    if options.dataset_name and options.dataset_name.lower() != "":
+        resetDS = options.dataset_name.split()
     
     # Initialize mongo db
-    db_init(resetU, resetD)
+    db_init(resetU, resetD, resetDS)
     
     api.add_resource(userMgr, '/user', endpoint='user')
     api.add_resource(questMgr, '/question', endpoint='question')
     api.add_resource(ansMgr, '/answer', endpoint='answer')
     
     # Start the app
-    app.run(threaded=True,debug=True) 
+    app.run(threaded=True,debug=False) 

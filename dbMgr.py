@@ -7,27 +7,46 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from config import *
 
 # dbC and dname are mongoDb based database for entities and their curation data
-def db_init(resetU, resetD):
+def db_init(resetU, resetD, resetDS):
 
-    # Reset all datasets
+    # Reset dataset(s)
     if resetD:
     
-        # Backup
-        export = {"data":{"tags":museums.keys(),"type":"triples"}}
-        dumpCurationResults(export,os.path.join(rootdir,"backup.nt"))
-        export = {"data":{"codes":[3,4,5], "tags":museums.keys(),"type":"jsonlines"}}
-        dumpCurationResults(export,os.path.join(rootdir,"backup.json"))
-    
-        # Reset all users
+        # Reset all users and all datasets
         if resetU:
+        
+            resetDS = [key for key in museums.keys() if key != "ulan"]
+        
+            # Backup data
+            export = {"data":{"tags":resetDS,"type":"triples"}}
+            dumpCurationResults(export,os.path.join(rootdir,"backup.nt"))
+            export = {"data":{"codes":[3,4,5], "tags":resetDS,"type":"jsonlines"}}
+            dumpCurationResults(export,os.path.join(rootdir,"backup.json"))
+        
+            # Remove all data
             cleanDatabases()
-            createDatabase()
             usrdb.drop_all()
             usrdb.create_all()
+            
+            # Add default data
+            populateTags()
+            populateQuestions(resetDS)
         else:
-            cleanDatabase('question')
-            cleanDatabase('answer')
-            createDatabase()
+        
+            # Backup data
+            export = {"data":{"tags":resetDS,"type":"triples"}}
+            dumpCurationResults(export,os.path.join(rootdir,"backup.nt"))
+            export = {"data":{"codes":[3,4,5], "tags":resetDS,"type":"jsonlines"}}
+            dumpCurationResults(export,os.path.join(rootdir,"backup.json"))
+        
+            # Reset dataset(s)
+            if len(resetDS) == len(museums.keys()):
+                cleanDatabase('question')
+                cleanDatabase('answer')
+                populateQuestions(resetDS)
+            else:
+                cleanDataset(resetDS)
+                populateQuestions(resetDS)
             
     updateConfig()
     #pprint(museums)
@@ -75,15 +94,24 @@ def cleanDatabase(docname):
     dbC[dname][docname].delete_many({})
     dbC[dname][docname].drop()
     #print "\n"
-            
-# Create database with default values for curation
-def createDatabase():
+
+# Used to drop records from questions and answers databases for specific dataset e.g. NPG
+def cleanDataset(resetDS):
     
-    # Reset tags table
-    populateTags()    
-    # Reset questions table
-    populateQuestions()
-    
+    for dataset in resetDS:
+        #print "\nDropping collection (aka database) questions/answers for dataset {}".format(dataset)
+        logging.info("Dropping collection (aka database) questions/answers for dataset {}".format(dataset))
+        
+        # Find and delete all questions
+        # Retrieve all questions with uri prefix
+        questions = dbC[dname]["question"].find({ 'uri1': { '$regex': ".*"+museums[dataset]["uri"]+".*" } })
+        for q in questions:
+            # Find and delete all answers
+            answers = q["decision"]
+            for a in answers:
+                dbC[dname]["answer"].delete_many({"_id":ObjectId(a)})
+            dbC[dname]["question"].delete_many({"_id":ObjectId(q["_id"])})
+
 #Tag
     #tagname, string
     
@@ -136,7 +164,6 @@ def updateConfig():
     #uid, String - userID
     #name, String
     #rating, Integer
-    #questionsSeen, List of object IDs from Question
     #tags, list of object IDs from Tags
     
 # Populate database with default curators
@@ -166,25 +193,24 @@ def addCurator(ce):
     #record linkage score , double, similarity score calculated by record linkage module
     
 # Populate default set of questions
-def populateQuestions():
+def populateQuestions(datasets):
 
-    basedir = os.path.join("linkage", "questions")
-    datasets = [d[:d.index('.')] for d in os.listdir(basedir)]
-    
-    # Reload all datasets
+    # Reload dataset(s)
     for dataset in datasets:
         f = dataset+'.json'
-        f = os.path.join(rootdir,'linkage','questions',f)
+        f = os.path.join(questiondir,f)
         populateQuestionsFromJSON(f)
-    
-    dbC[dname]["question"].create_index([("uri1", ASCENDING)])
-    dbC[dname]["question"].create_index([("uri2", ASCENDING)])
-    dbC[dname]["question"].create_index([("tags", ASCENDING)])
-    dbC[dname]["question"].create_index([("status", ASCENDING)])
-    dbC[dname]["question"].create_index([("decision", ASCENDING)])
-    dbC[dname]["question"].create_index([("record linkage score", ASCENDING)])
-    dbC[dname]["question"].create_index([("lastSeen",DESCENDING)])
-    #printDatabase("question")
+
+    # Create new index only when all datasets are being reset
+    if len(datasets) == len(museums.keys()):
+        dbC[dname]["question"].create_index([("uri1", ASCENDING)])
+        dbC[dname]["question"].create_index([("uri2", ASCENDING)])
+        dbC[dname]["question"].create_index([("tags", ASCENDING)])
+        dbC[dname]["question"].create_index([("status", ASCENDING)])
+        dbC[dname]["question"].create_index([("decision", ASCENDING)])
+        dbC[dname]["question"].create_index([("record linkage score", ASCENDING)])
+        dbC[dname]["question"].create_index([("lastSeen",DESCENDING)])
+        #printDatabase("question")
 
 # Populate default set of questions from json file
 def populateQuestionsFromJSON(f):
@@ -375,8 +401,8 @@ def preProcess(value):
         if type(value) == int:
             value = str(value)
 
-        # Remove leading and trailing whitespace 
-        value = value.strip()
+        # Remove leading and trailing whitespace and do lower case
+        value = value.strip().lower()
 
         # Covert to ASCII just for the comparison
         value = unidecode(value)

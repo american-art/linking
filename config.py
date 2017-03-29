@@ -8,7 +8,7 @@ from unidecode import unidecode
 import os, json, sys, getopt, logging, logging.handlers
 from optparse import OptionParser
 
-devmode = True
+devmode = False
 
 if devmode:
     server = "http://localhost:5000/"
@@ -83,6 +83,7 @@ museums = {#"aaa":append_default_dict({"uri":"/aaa/","ranking":1,"name":"Archive
 statuscodes = {"NotStarted":1,"InProgress":2,"Agreement":3,"Disagreement":4,"Non-conclusive":5}
 
 rootdir = os.path.dirname(os.path.abspath(__file__))
+questiondir = os.path.join(rootdir,"linkage", "questions")
 
 # Load API keys from file
 f = open("key.json",'r').read()

@@ -23,6 +23,8 @@
     
         // Download jsonlines
         $("#jsonlines").click(function(e){
+            // Required for non-chrome browser
+            e.preventDefault()
             
             var tags = $('#museums').val();
             var codes = $('#codes').val();
@@ -61,6 +63,8 @@
         
         // Download triples
         $("#triples").click(function(e){
+            // Required for non-chrome browser
+            e.preventDefault()
             
             var tags = $('#museums').val();
             var codes = $('#codes').val();
