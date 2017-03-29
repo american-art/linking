@@ -29,5 +29,8 @@
   
 4. Run the application using following command
   ```
-  python app.py
+  python app.py (in normal cases)
+  python app.py -h (for help)
+  python app.py -u true -d true (when running for the first time)
+  python app.py -d true -n "saam npg" (to reset saam and npg datasets)
   ```
