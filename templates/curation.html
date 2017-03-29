@@ -93,10 +93,10 @@
                 document.getElementById("aN"+i).disabled = true;
                 document.getElementById("aNS"+i).disabled = true;
             }
-        
+            $('#stats_card').hide();
+            
             // Send get call and populate card content
             populateCards();
-            $('#stats_card').hide();
             
             // Logic for accepting answers and sending them to server
             for(i=1;i<=maxCards;i++){
@@ -160,11 +160,12 @@
             $.ajax({
                 type: "GET",
                 url: sv,
+                timeout: 5000, // sets timeout to 5 seconds
                 beforeSend: function(){
                     for(i=1;i<=maxCards;i++){
                         $('#progress'+i).show();
                     }
-                },  
+                },
                 success: function(data, textStatus, xhr){
                     if (data.length > 0)
                     {
@@ -196,8 +197,8 @@
                     }
                 },
                 error: function(xhr){
-                    console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
                     if (xhr.status == "500"){
+                        console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
                         Materialize.toast("Something went wrong. Please back in sometime!", 2000,'rounded');
                         for(i=1;i<=maxCards;i++){
                             $('#card'+i).hide();
@@ -214,9 +215,12 @@
                         window.setTimeout(function() {
                             if (rsp["error"].includes("Sparql Endpoint not responding")){
                                 for(i=1;i<=maxCards;i++){
-                                    $('#progress'+i).hide();
+                                    $('#card'+i).hide();
                                 }
                                 Materialize.toast("Try again in some time or ensure that sparql endpoints are up!", 2000,'rounded');
+                                window.setTimeout(function() {
+                                    window.location.href = '/curation';
+                                },4000);
                             }
                             else if (rsp["error"].includes("not have any tags associated")){
                                 Materialize.toast("Please update your preferred museums. Redirecting...", 2000,'rounded');
@@ -400,6 +404,8 @@
         // Submit all answers together only
         function submitAnswer(){
         
+            Materialize.toast("Submitting all your responses...", 2*questionCount*1000,'rounded');
+        
             // For all answers
             for(i=1;i<=questionCount;i++){
                 var sv = '{{server}}'.concat("/answer");
@@ -415,8 +421,11 @@
                     contentType: 'application/json',
                     success: function(data){
                         if (i > questionCount){
-                            window.location.href = "/curation";
-                            i = 0;
+                            window.setTimeout(function() {
+                                // Add delay for mongoDb to update last response not give it back immediately 
+                                window.location.href = "/curation";
+                                i = 0;
+                            }, 2*questionCount*1000);
                         }
                     },
                 });

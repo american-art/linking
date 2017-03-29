@@ -146,10 +146,6 @@ def register():
     return render_template('register.html')
     '''
 
-@app.route('/answer/<option>')
-def redirectAnswer(option):
-    return redirect(url_for("answer")) + option
-
 # Handle RESTful API for user services like  Registration/Login/Logout/Statistics
 class userMgr(Resource):
     
@@ -384,7 +380,7 @@ def getQuestionsForUser(count,stats):
 def populateQuestionsWithFields(questions, stats):
     
     output = []
-    for question in questions:       
+    for question in questions:
         left = retrieveProperties(question['uri1'])
         right = retrieveProperties(question['uri2'])
 
@@ -401,6 +397,10 @@ def populateQuestionsWithFields(questions, stats):
         #logging.info(matches)
         #pprint(matches)
         
+        practice_tagid = dbC[dname]["tag"].find_one({'tagname':"practice"})['_id']
+        if practice_tagid in question["tags"]:
+            matches["Unmatched"]["leftT"] = "practice"
+
         if stats == True:
             s = getStats(question)
             output += [{'qid': str(question['_id']), "score":format(question["record linkage score"], '.3f'),

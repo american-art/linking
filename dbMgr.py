@@ -1,5 +1,5 @@
 import csv, datetime, json, os
-from urllib2 import HTTPError
+from urllib2 import HTTPError, URLError
 from random import randint
 from pprint import pprint
 from bson.objectid import ObjectId
@@ -40,7 +40,8 @@ def db_init(resetU, resetD, resetDS):
             dumpCurationResults(export,os.path.join(rootdir,"backup.json"))
         
             # Reset dataset(s)
-            if len(resetDS) == len(museums.keys()):
+            temp = [key for key in museums.keys() if key != "ulan"]
+            if len(resetDS) == len(temp):
                 cleanDatabase('question')
                 cleanDatabase('answer')
                 populateQuestions(resetDS)
@@ -86,8 +87,8 @@ def printDatabase(docname):
     
 # Clean particular Document from a Collection
 def cleanDatabase(docname):
-    #print "\nDropping collection (aka database)",docname
-    logging.info("Dropping collection (aka database)".format(docname))
+    #print "\nDropping collection (aka database) {}".foramt(docname)
+    logging.info("Dropping collection (aka database) {}".format(docname))
     #for val in dbC[dname][docname].find():
         #print "\nDropping: ",val
         #logging.info("Dropping: {}".format(val))
@@ -122,7 +123,7 @@ def populateTags():
         te = {"tagname":key}
         dbC[dname]["tag"].insert_one(te)
     
-    #printDatabase("tag") 
+    printDatabase("tag") 
  
 # Read config file and update various dynamic properties
 def updateConfig():
@@ -184,7 +185,6 @@ def addCurator(ce):
     
 # Question
     #status, integer: {"NotStarted":1,"InProgress":2,"Agreement":3,"Disagreement":4,"Non-conclusive":5}
-    #uniqueURI, String: alphabetical concatenation of two URI to get unique ID
     #lastSeen, datetime field to select question based on time it was asked to previous curator
     #tags, list of object IDs from Tags
     #uri1, for now, just a URI related to a specific artist
@@ -228,18 +228,17 @@ def populateQuestionsFromJSON(f):
         # Find tags
         tag1 = findTag(q["id1"])
         tag2 = findTag(q["id2"])
-        
+            
         # Build document
         qe = {"status":statuscodes["NotStarted"],
-              "uniqueURI":generateUniqueURI(q["id1"],q["id2"]),
               "lastSeen": datetime.datetime.utcnow(),
-              "tags":[dbC[dname]["tag"].find_one({'tagname':tag1})['_id'],dbC[dname]["tag"].find_one({'tagname':tag2})['_id'] ],
+              "tags":[dbC[dname]["tag"].find_one({'tagname':tag1})['_id'],dbC[dname]["tag"].find_one({'tagname':tag2})['_id']],
               "uri1":q["id1"],
               "uri2":q["id2"],
               "decision": [], # Should be updated in submit answer
               "record linkage score": q["record linkage score"]
         }
-         
+
         # Add Document
         dbC[dname]["question"].insert_one(qe)
         count += 1
@@ -250,7 +249,7 @@ def populateQuestionsFromJSON(f):
         
         if devmode and count == 100:
             break
-     
+    
     #print "Populated {} questions from {}".format(count,f)
     logging.info("Populated {} questions from {}".format(count,f))
     #printDatabase("question")
@@ -282,13 +281,6 @@ def checkURIOrdering(uri1,uri2):
         return True
     else:
         return False
-            
-# Generate unique URI based on alphabetical ordering defined for different museums 
-def generateUniqueURI(uri1,uri2):
-    if checkURIOrdering(uri1,uri2):
-        return uri1+uri2
-    else:
-        return uri2+uri1
 
 # Retrieve set of questions from database based on tags, lastseen, unanswered vs in progress
 def getQuestionsForUID(uid,count):
@@ -378,7 +370,7 @@ def getQuestionsForUID(uid,count):
         temp = sorted(temp,key=lambda x:x["record linkage score"],reverse=True)
         for t in temp:
             q = q + [t]
-        
+
     q_new = []
     # Update lastSeen for all questions that are being returned
     for question in q:
@@ -430,6 +422,10 @@ def retrieveProperties(uri):
         #print "Sparql endpoint threw HTTPError({0}): {1}\n".format(e.errno, e.strerror)
         logging.info("Sparql endpoint threw HTTPError({0}): {1}".format(e.errno, e.strerror))
         return None
+    except URLError as e:
+        #print "Sparql endpoint threw URLError({0}): {1}\n".format(e.errno, e.strerror)
+        logging.info("Sparql endpoint threw URLError({0}): {1}".format(e.errno, e.strerror))
+        return None
     
     data = {}
     for key in rs['results']['bindings'][0].keys():
@@ -450,7 +446,7 @@ def getMatches(left,right):
     # output format
     exactMatch = {"name":[],"value":[]}
     
-    unmatched = {"name":[],"lValue":[],"rValue":[], "leftT":findTag(left["uri"]).upper(), "rightT":findTag(right["uri"]).upper()}
+    unmatched = {"name":[],"lValue":[],"rValue":[], "leftT":findTag(left["uri"]), "rightT":findTag(right["uri"])}
     
     for field in right.keys():
         
@@ -532,8 +528,8 @@ def submitAnswer(qid, answer, uid):
         for aid in q["decision"]:
             ans = dbC[dname]["answer"].find_one({'_id':ObjectId(aid)})
             if ans and ans["author"] == uid:
-                #print "User has already submitted answer to question ", qid
-                logging.info("User has already submitted answer to question ", qid)
+                #print "User has already submitted answer to question {}".format(qid)
+                logging.info("User has already submitted answer to question {}".format(qid))
                 message = "User has already submitted answer to question with qid {}".format(qid)
                 return {"status":False,"message":message}
         
@@ -546,7 +542,7 @@ def submitAnswer(qid, answer, uid):
         # update decision with answer object id
         q['decision'] = q['decision']+[aid]
         #print "decision is: ", q['decision']
-        #logging.info("decision is: {}".format(q['decision']))
+        logging.info("decision is: {}".format(q['decision']))
         
         # retrieve all answers
         noYes = 0
@@ -577,11 +573,12 @@ def submitAnswer(qid, answer, uid):
             if tag != "ulan":
                 confidenceYesNo = museums[tag]['confidenceYesNo']
                 confidenceNotSure = museums[tag]['confidenceNotSure']
+                break
     
         #print "current Y/N/NA: ",noYes,noNo,noNotSure
-        #logging.info("current Y/N/NA: {}, {}, {}".format(noYes,noNo,noNotSure))
+        logging.info("current Y/N/NA: {}, {}, {}".format(noYes,noNo,noNotSure))
         #print "confidence Y-N/NA: ",confidenceYesNo,confidenceNotSure
-        #logging.info("confidence Y-N/NA: {}-{}".format(confidenceYesNo,confidenceNotSure))
+        logging.info("confidence Y-N/NA: {}-{}".format(confidenceYesNo,confidenceNotSure))
     
         if noYes == confidenceYesNo:
             q['status'] = statuscodes["Agreement"] # Update to, Agreement 
@@ -599,6 +596,8 @@ def submitAnswer(qid, answer, uid):
                 museums[tag]['unconcludedQ'] += 1
         else:
             q['status'] = statuscodes["InProgress"] # Update to, InProgress
+    
+        logging.info("Updating question document {}".format(q))
     
         #update database entry of question with new status and decision
         q =  dbC[dname]["question"].find_one_and_update(
@@ -635,14 +634,14 @@ def dumpCurationResults(args,filepath):
         statuses = [int(s) for s in args['data']['codes']]
         for tag in tags:
             for status in statuses:
-            
+                # Find only questions that were matched
                 tid = dbC[dname]["tag"].find_one({'tagname':tag})
-                
-                if (tid != None):
+                if tid != None:
                     tid = tid['_id']
                     questions = dbC[dname]["question"].find({'status':status})
                     
                     for q in questions:
+                    
                         a = {}
                         if tid in q['tags']:
                             
@@ -676,11 +675,12 @@ def dumpCurationResults(args,filepath):
         for tag in tags:
             # Find only questions that were matched
             tid = dbC[dname]["tag"].find_one({'tagname':tag})
-            if (tid != None):
+            if tid != None:
                 tid = tid['_id']
                 questions = dbC[dname]["question"].find({'status':statuscodes["Agreement"]})
                 
                 for q in questions:
+
                     a = {}
                     if tid in q['tags']:
                         # Generate and dump triples
