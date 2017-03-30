@@ -15,7 +15,7 @@ def index():
     if current_user.is_authenticated:
         return redirect('/curation')
 
-    return render_template('login_fb.html')
+    return render_template('login_fb.html', getcommanpass=True)
     #return render_template('login.html')
     
 def get_hexdigest(alg, salt, raw_password):
@@ -218,7 +218,7 @@ class User(UserMixin, usrdb.Model):
     #social_id = usrdb.Column(usrdb.String(64), nullable=False, unique=True)
     email = usrdb.Column(usrdb.String, primary_key=True)
     authenticated = usrdb.Column(usrdb.Boolean, default=False)
-    password = usrdb.Column(usrdb.String)
+    #password = usrdb.Column(usrdb.String)
 
     def is_active(self):
         """True, as all users are active."""
@@ -265,7 +265,7 @@ def oauth_callback(provider):
         usrdb.session.add(user)
         usrdb.session.commit()
         addCurator({"uid":email,"name":name,"tags":[],"rating":5})
-        
+
     login_user(user, True)
     return redirect(url_for('index'))
 

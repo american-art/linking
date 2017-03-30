@@ -16,6 +16,21 @@ def before():
     logging.info("IP address: {}".format(request.remote_addr))
     #logging.info("Received request with header: {}".format(request.headers))
     pass
+
+@app.route('/validate',methods=['GET','POST'])
+def authorizeFacebookUser():
+    
+    if request.method == 'POST':
+        
+        # Get command pass from login page and verify
+        #print request.form
+        logging.info('Input received: {}'.format(request.form))
+        if request.form['pw'] == curationpass:
+            return render_template('login_fb.html', getcommanpass=False)
+        else:
+            return render_template('login_fb.html', getcommanpass=True, rsp="Invalid passcode! Please try again.")
+
+    return redirect(url_for('index'))
     
 @app.route('/curation')
 def show_curation():

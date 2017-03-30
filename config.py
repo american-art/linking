@@ -91,5 +91,7 @@ f = open("key.json",'r').read()
 keys = json.loads(f)
 if devmode:
     app.config['OAUTH_CREDENTIALS'] = keys['dev']
+    curationpass = keys["dev"]["pass"]
 else:
     app.config['OAUTH_CREDENTIALS'] = keys['production']
+    curationpass = keys["production"]["pass"]
