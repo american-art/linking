@@ -397,7 +397,7 @@ def populateQuestionsWithFields(questions, stats):
 # Handle RESTful API for submitting answer
 class downloadMgr(Resource):
     
-    def put(self):
+    def post(self):
         #print "PUT Input received: {} \n".format(request.json)
         logging.info("PUT Input received: {}".format(request.json))
         
@@ -406,7 +406,6 @@ class downloadMgr(Resource):
         
         # call dump results which should create dump results into json file and save as results.json
         dumpCurationResults(request.json,None)
-        
         return jsonify({},200)
     
     def get(self):
@@ -416,17 +415,19 @@ class downloadMgr(Resource):
         if not current_user.is_authenticated:
             return {'error':"Couldn't authenticate user."}, 400
 
-        type = request.args.get('type')
+        type = request.args.get('type').lower()
         if type == None:
             return {'error':"Download type not provided."}, 400
         else:
-            if type.lower() == "jsonlines":
-                return send_from_directory(directory=rootdir, filename="results.json",as_attachment=True)
-            elif type.lower() == "triples":
-                return send_from_directory(directory=rootdir, filename="results.nt",as_attachment=True)
+            if type == "triples":
+                filename = "results.nt"
+            elif type == "jlines":
+                filename = "results.json"
             else:
                 return {'error':"Download type not supported or invalid."}, 400
-    
+        
+        return send_from_directory(directory=rootdir,filename=filename ,as_attachment=True)
+        
 if __name__ == '__main__':
     
     # Process command line options

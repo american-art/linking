@@ -22,7 +22,7 @@
         $('select').material_select();
     
         // Download jsonlines
-        $("#jsonlines").click(function(e){
+        $("#jlines").click(function(e){
             // Required for non-chrome browser
             e.preventDefault()
             
@@ -30,37 +30,37 @@
             var codes = $('#codes').val();
             
             var userObj = new Object();
-            userObj.data = {"tags":tags,"codes":codes,"type":"jsonlines"};
+            userObj.data = {"tags":tags,"codes":codes,"type":"jlines"};
             json_data = JSON.stringify(userObj);
             console.log(json_data);
             var sv = '{{server}}'.concat("/download");
             
             $.ajax({
-                method: 'PUT',
+                method: 'POST',
                 url: sv,
                 data: json_data,
                 contentType: 'application/json',
                 
                 beforeSend: function(){
                     $('#progress').show();
-                    document.getElementById("jsonlines").disabled = true;
+                    document.getElementById("jlines").disabled = true;
                     console.log("downloading...")
                 },
                 success: function(data){
                     console.log("File Created!");
                     $('#progress').hide();
-                    document.getElementById("jsonlines").disabled = false;
-                    window.location.href = "/download?type=jsonlines";
+                    document.getElementById("jlines").disabled = false;
+                    window.location.href = "/download?type=jlines";
                 },
                 error: function(xhr){
                     console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
                     Materialize.toast("Something went wrong. Please try again!",5000);
                     $('#progress').hide();
-                    document.getElementById("jsonlines").disabled = false;
+                    document.getElementById("jlines").disabled = false;
                 }
             });
         });
-        
+    
         // Download triples
         $("#triples").click(function(e){
             // Required for non-chrome browser
@@ -76,11 +76,10 @@
             var sv = '{{server}}'.concat("/download");
             
             $.ajax({
-                method: 'PUT',
+                method: 'POST',
                 url: sv,
                 data: json_data,
                 contentType: 'application/json',
-                
                 beforeSend: function(){
                     $('#progress').show();
                     document.getElementById("triples").disabled = true;
@@ -100,8 +99,8 @@
                 }
             });
         });
+
     });
-    
     </script>
     
     <style>
@@ -154,11 +153,10 @@
                                 </div>
                             </div>
                         </div>
-                        <button id = "jsonlines" type="submit" class="btn" >Jsonlines</button>
+                        <button id = "jlines" type="submit" class="btn" >Jsonlines</button>
                         <button id = "triples" type="submit" class="btn" >Triples</button>
                     </form>
-                </div>
-                
+                </div> 
             </div>
         </div>
     </div>

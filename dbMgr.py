@@ -641,7 +641,7 @@ def dumpCurationResults(args,filepath):
     logging.info("Dumping data for museums : {}".format(tags))
 
     # Download json lines 
-    if args["data"]["type"] == "jsonlines":
+    if args["data"]["type"] == "jlines":
         if filepath:
             f = open(filepath,'w')
         else:
@@ -666,6 +666,12 @@ def dumpCurationResults(args,filepath):
                             a["human curated"] =  True
                             a["id1"] = q["uri1"]
                             a["id2"] = q["uri2"]
+                            
+                            authors = []
+                            for aid in q["decision"]:
+                                authors.append(dbC[dname]["answer"].find_one({'_id':ObjectId(aid)})["author"])
+                            
+                            a["authors"] = authors
                             
                             if q["status"] == statuscodes["Agreement"]:
                                 a["match"] = "Matched"
@@ -705,6 +711,7 @@ def dumpCurationResults(args,filepath):
         
         #print "Data dumped in file ", f.name
         logging.info("Data dumped in file {}".format(f.name))
+        f.close()
 
 def returnCurationResults():
     results = {"matched":[],"unmatched":[]}
