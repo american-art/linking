@@ -50,7 +50,18 @@
                     console.log("File Created!");
                     $('#progress').hide();
                     document.getElementById("jlines").disabled = false;
-                    window.location.href = "/download?type=jlines";
+                    
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{server}}'.concat("/download?type=jlines"),
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Cache-Control", 'no-cache');
+                        },
+                        success: function(data){
+                            downloadAttachment("results.json",data)
+                            console.log("File Downloaded!");
+                        }
+                    });
                 },
                 error: function(xhr){
                     console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
@@ -89,7 +100,18 @@
                     console.log("File Created!");
                     $('#progress').hide();
                     document.getElementById("triples").disabled = false;
-                    window.location.href = "/download?type=triples";
+                    
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{server}}'.concat("/download?type=triples"),
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Cache-Control", 'no-cache')
+                        },
+                        success: function(data){
+                            downloadAttachment("results.n3",data)
+                            console.log("File Downloaded!");
+                        }
+                    });
                 },
                 error: function(xhr){
                     console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
@@ -99,7 +121,22 @@
                 }
             });
         });
+        
+        function downloadAttachment(filename, data) {
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data));
+            pom.setAttribute('download', filename);
 
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+        };
+        
     });
     </script>
     
