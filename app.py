@@ -14,8 +14,12 @@ def index():
 
     if current_user.is_authenticated:
         return redirect('/curation')
-
-    return render_template('login_fb.html', getcommanpass=True)
+    global fbrsp
+    if fbrsp != "":
+        return render_template('login_fb.html', getcommanpass=True, rsp=fbrsp)
+        fbrsp = ""
+    else:
+        return render_template('login_fb.html', getcommanpass=True)
     #return render_template('login.html')
     
 def get_hexdigest(alg, salt, raw_password):
@@ -251,10 +255,17 @@ def oauth_authorize(provider):
 def oauth_callback(provider):
     if current_user.is_authenticated:
         return redirect(url_for('index'))
+        
+    global fbrsp
+    
     oauth = OAuthSignIn.get_provider(provider)
     social_id, email, name = oauth.callback()
+    
     if social_id is None:
-        flash('Authentication failed.')
+        fbrsp = "Authentication failed!"
+        return redirect(url_for('index'))
+    elif email is None:
+        fbrsp = "Please share email address from Facebook app settings!"
         return redirect(url_for('index'))
     
     user = User.query.filter_by(email=email).first()

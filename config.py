@@ -48,6 +48,7 @@ lm.session_protection = 'strong'
 
 confidenceLevel = 2
 dname = "linkVerification"
+fbrsp = ""
 
 def append_default_dict(x):
     z = x.copy()

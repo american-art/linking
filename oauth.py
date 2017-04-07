@@ -61,9 +61,10 @@ class FacebookSignIn(OAuthSignIn):
                     'redirect_uri': self.get_callback_url()},
                 decoder=json.loads
             )   
+            me = oauth_session.get('me?fields=id,email,name').json()
         except ConnectionError:
             return (None,None,None)
-            
-        me = oauth_session.get('me?fields=id,email,name').json()
 
-        return (me.get('id'), me.get('email'), me.get('name') )
+        #print "Facebook OAuth returbed : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name'))
+        logging.info("Facebook OAuth returbed : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name')))
+        return (me.get('id'), me.get('email'), me.get('name'))
