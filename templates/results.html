@@ -62,10 +62,12 @@
                             console.log("File Downloaded!");
                         },
                         error: function(xhr){
-                            console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' +xhr.responseText);
+                            console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText);
+                            downloadAttachment("results.json",xhr.responseText)
+                            console.log("File Downloaded!");
                         },
                         complete: function(){
-                            console.log('GET request done!");
+                            console.log("GET request done!");
                         }
                     });
                 },
@@ -76,7 +78,7 @@
                     document.getElementById("jlines").disabled = false;
                 },
                 complete: function(){
-                    console.log('PUT request done!");
+                    console.log("PUT request done!");
                 }
             });
         });
@@ -121,10 +123,12 @@
                             console.log("File Downloaded!");
                         },
                         error: function(xhr){
-                            console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' +xhr.responseText);
+                            console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText);
+                            downloadAttachment("results.n3",xhr.responseText)
+                            console.log("File Downloaded!");
                         },
                         complete: function(){
-                            console.log('GET request done!");
+                            console.log("GET request done!");
                         }
                     });
                 },
@@ -135,7 +139,7 @@
                     document.getElementById("triples").disabled = false;
                 },
                 complete: function(){
-                    console.log('PUT request done!");
+                    console.log("PUT request done!");
                 }
             });
         });
