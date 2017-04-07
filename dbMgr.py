@@ -3,7 +3,7 @@ from urllib2 import HTTPError, URLError
 from random import randint
 from pprint import pprint
 from bson.objectid import ObjectId
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, JSON, SPARQLExceptions
 from config import *
 
 # dbC and dname are mongoDb based database for entities and their curation data
@@ -426,15 +426,15 @@ def retrieveProperties(uri):
         #print "Sparql endpoint threw URLError({0}): {1}\n".format(e.errno, e.strerror)
         logging.info("Sparql endpoint threw URLError({0}): {1}".format(e.errno, e.strerror))
         return None
-    except EndPointInternalError as e:
+    except SPARQLExceptions.EndPointInternalError as e:
         #print "Sparql wrapper threw EndPointInternalError({0}): {1}".format(e.errno, e.strerror)
         logging.info("Sparql wrapper threw EndPointInternalError({0}): {1}".format(e.errno, e.strerror))
         return None
-    except EndPointNotFound as e:
+    except SPARQLExceptions.EndPointNotFound as e:
         #print "Sparql wrapper threw EndPointNotFound({0}): {1}".format(e.errno, e.strerror)
         logging.info("Sparql wrapper threw EndPointNotFound({0}): {1}".format(e.errno, e.strerror))
         return None
-    except QueryBadFormed as e:
+    except SPARQLExceptions.QueryBadFormed as e:
         #print "Sparql wrapper threw QueryBadFormed({0}): {1}".format(e.errno, e.strerror)
         logging.info("Sparql wrapper threw QueryBadFormed({0}): {1}".format(e.errno, e.strerror))
         return None

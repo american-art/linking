@@ -199,7 +199,7 @@
                 error: function(xhr){
                     if (xhr.status == "500"){
                         console.log('Request Status: ' + xhr.status + ' \nStatus Text: ' + xhr.statusText + ' \nResponse Text: ' + xhr.responseText);
-                        Materialize.toast("Something went wrong. Please back in sometime!", 2000,'rounded');
+                        Materialize.toast("Something went wrong. Please try back in sometime!", 2000,'rounded');
                         for(i=1;i<=maxCards;i++){
                             $('#card'+i).hide();
                         }
