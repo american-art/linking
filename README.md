@@ -34,3 +34,9 @@
   python app.py -u true -d true (when running for the first time)
   python app.py -d true -n "saam npg" (to reset saam and npg datasets)
   ```
+
+5. Backup and restore MongoDb
+ ```
+ mongodump --out /data/backup/
+ mongorestore /data/backup/
+ ```
