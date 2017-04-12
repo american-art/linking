@@ -369,7 +369,10 @@ def getQuestionsForUID(uid,count):
         q.remove(question)
         temp = sorted(temp,key=lambda x:x["record linkage score"],reverse=True)
         for t in temp:
-            q = q + [t]
+            # Ideally this check is not necessary, but this is required due to 
+            # issues of repeat ulan pairs and limit of three causing not all variants to be answered.
+            if t["status"] == statuscodes['NotStarted'] or t["status"] == statuscodes['InProgress']:
+                q = q + [t]
 
     q_new = []
     # Update lastSeen for all questions that are being returned
