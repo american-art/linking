@@ -346,7 +346,7 @@ class ansMgr(Resource):
         answer = {"value":a_value,"comment":a_comment,"author":uid,"qid":qid}
         
         rsp = submitAnswer(qid,answer,uid)
-        logging.info("{}".format(rsp["message"])
+        logging.info("{}".format(rsp["message"]))
         if rsp["status"] == False:
             return {'error':rsp["message"]},400
         else:
