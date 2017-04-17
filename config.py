@@ -46,14 +46,13 @@ lm = LoginManager(app)
 lm.login_view = 'index'
 lm.session_protection = 'strong'
 
-confidenceLevel = 2
 dname = "linkVerification"
 fbrsp = ""
 
 def append_default_dict(x):
     z = x.copy()
     # Default values, these are updated after importing config and questions
-    y = {"confidenceYesNo":2,"confidenceNotSure":2,"matchedQ":0,"unmatchedQ":0,"unconcludedQ":0,"totalQ":0}
+    y = {"confidenceYesNo":1,"confidenceNotSure":2,"matchedQ":0,"unmatchedQ":0,"unconcludedQ":0,"totalQ":0}
     z.update(y)
     return z
 

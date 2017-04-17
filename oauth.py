@@ -65,6 +65,6 @@ class FacebookSignIn(OAuthSignIn):
         except ConnectionError:
             return (None,None,None)
 
-        #print "Facebook OAuth returbed : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name'))
-        logging.info("Facebook OAuth returbed : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name')))
+        #print "Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name'))
+        logging.info("Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name')))
         return (me.get('id'), me.get('email'), me.get('name'))
