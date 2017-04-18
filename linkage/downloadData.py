@@ -9,11 +9,15 @@ files = os.listdir( os.path.join(os.path.dirname(os.path.realpath(__file__)),'sp
 if not os.path.exists('dataset'):
     os.makedirs('dataset')
     
+
 # Iterate over all SPARQL files
 for f in files:
     # Extract museum name
     base = f[:f.index('.')] # ulan, npg etc.
     f_in = open(os.path.join('sparql',f), 'r')
+    
+    if len(sys.argv) > 1 and base not in sys.argv[1].split():
+        continue
     
     # Send SPARQL query
     if base == 'ulan':
