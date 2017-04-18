@@ -1,5 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
-import json, sys, re
+import json, sys, re, os
 import museum_graph_api_config as config
 SPARQL_ENDPOINT = "http://data.americanartcollaborative.org/sparql"
 ULAN_SPARQL_ENDPOINT = "http://vocab.getty.edu/sparql"
@@ -9,7 +9,7 @@ from collections import defaultdict
 def get_musuem_ulan_matches(musuem):
 	sparql = SPARQLWrapper(SPARQL_ENDPOINT)
 	sparql.setReturnFormat(JSON)
-	museum_dict = {'GM': 'GM', 'IMA': 'ima', 'WAM': 'wam'}
+	museum_dict = {'GM': 'GM', 'IMA': 'ima', 'PUAM':'puam', 'WAM': 'wam'}
 
 	data_dict = defaultdict(list)
 	query = ''

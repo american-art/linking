@@ -24,7 +24,7 @@ Recall = TP / (TP + FN)
 '''
 
 from SPARQLWrapper import SPARQLWrapper, JSON
-import json, sys,os
+import json, sys, os
 import museum_graph_api_config as config
 SPARQL_ENDPOINT = "http://data.americanartcollaborative.org/sparql"
 ULAN_SPARQL_ENDPOINT = "http://vocab.getty.edu/sparql"
@@ -40,13 +40,13 @@ def calculate_relevance(ipfile, museum):
 	total_uri_set = set()
 	sparql = SPARQLWrapper(SPARQL_ENDPOINT)
 	sparql.setReturnFormat(JSON)
-	museum_dict = {'GM': 'GM', 'IMA': 'ima', 'WAM': 'wam'}
+	museum_dict = {'GM': 'GM', 'IMA': 'ima', 'PUAM':'puam', 'WAM': 'wam'}
 
 	data_dict = defaultdict(list)
 	query = ''
 
 	#Calculate the ground truth
-	#Cacluate total URI matches for the MUSUEM
+	#Calculate total URI matches for the MUSUEM
 	count_query = ''
 	fp = os.path.join(os.path.dirname(os.path.realpath(__file__)),'get_uri_matches.sparql')
 	with open(fp, 'r') as query_file:
