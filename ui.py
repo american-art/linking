@@ -78,6 +78,9 @@ def show_user_profile():
                     stats[tag]["unmatched"] += 1
                 elif q['status'] == statuscodes["Non-conclusive"]:
                     stats[tag]["no-conclusion"] += 1
+                elif q['status'] == statuscodes["InProgress"]:
+                    if a["value"] == 3:
+                        stats[tag]["no-conclusion"] += 1
                     
         return render_template('profile.html',keys=keys,museums=museums,userStats=stats,server=server[:-1])
     
