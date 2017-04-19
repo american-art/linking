@@ -154,6 +154,11 @@ def updateConfig():
                 cN += 1
             elif q["status"] == statuscodes["Non-conclusive"]:
                 cNS += 1
+            elif q["status"] == statuscodes["InProgress"]:
+                for aid in q["decision"]:
+                    if dbC[dname]["answer"].find_one({'_id':ObjectId(aid)})["value"] == 3:
+                        cNS += 1
+                        break
 
         museums[tag]["matchedQ"] = cY
         museums[tag]["unmatchedQ"] = cN
@@ -595,26 +600,44 @@ def submitAnswer(qid, answer, uid):
                 break
     
         #print "current Y/N/NA: ",noYes,noNo,noNotSure
-        logging.info("current Y/N/NA: {}, {}, {}".format(noYes,noNo,noNotSure))
+        logging.info("current Y/N/NS: {}, {}, {}".format(noYes,noNo,noNotSure))
         #print "confidence Y-N/NA: ",confidenceYesNo,confidenceNotSure
-        logging.info("confidence Y-N/NA: {}-{}".format(confidenceYesNo,confidenceNotSure))
+        logging.info("confidence Y-N/NS: {}-{}".format(confidenceYesNo,confidenceNotSure))
     
         if noYes == confidenceYesNo:
             q['status'] = statuscodes["Agreement"] # Update to, Agreement 
+            
             # Update linked statistics for tags of question submitted
             for tag in tags:
                 museums[tag]['matchedQ'] += 1
+            
+            # Decrement cases when there was not sure vote earlier which got changed to Yes/No
+            if noNotSure > 0:
+                for tag in tags:
+                    museums[tag]['unconcludedQ'] -= 1
+                
         elif noNo == confidenceYesNo:
             q['status'] = statuscodes["Disagreement"] # Update to, Disagreement 
+            
             # Update linked statistics for tags of question submitted
             for tag in tags:
                 museums[tag]['unmatchedQ'] += 1
+            
+            # Decrement cases when there was not sure vote earlier which got changed to Yes/No
+            if noNotSure > 0:
+                for tag in tags:
+                    museums[tag]['unconcludedQ'] -= 1
+                    
         elif noNotSure == confidenceNotSure:
             q['status'] = statuscodes["Non-conclusive"] # Update to, Non conclusive 
-            for tag in tags:
-                museums[tag]['unconcludedQ'] += 1
+            #for tag in tags:
+                #museums[tag]['unconcludedQ'] += 1
         else:
             q['status'] = statuscodes["InProgress"] # Update to, InProgress
+            # Update not sure when there are even one not sure count
+            if noNotSure > 0:
+                for tag in tags:
+                    museums[tag]['unconcludedQ'] += 1
     
         logging.info("Updating question document {}".format(q))
     
