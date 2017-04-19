@@ -1,49 +1,73 @@
 {
-    "f_score": 0.98046875, 
+    "f_score": 0.9691119691119693, 
     "false_negatives": {
         "http://data.americanartcollaborative.org/GM/constituent/abbott_james_mcneill_whistler": {
             "musuem_name": "James Abbott McNeill Whistler", 
-            "musuem_year": "1834", 
+            "musuem_year": "1834-01-01", 
             "ulan_birth_year": "1834", 
             "ulan_name": "Whistler, James McNeill"
         }, 
+        "http://data.americanartcollaborative.org/GM/constituent/alexander_george_healy_peter": {
+            "ulan_birth_year": "1813", 
+            "ulan_name": "Healy, George Peter Alexander"
+        }, 
+        "http://data.americanartcollaborative.org/GM/constituent/bickham_george_the_younger": {
+            "ulan_birth_year": "1671", 
+            "ulan_name": "Bickham, George, the younger"
+        }, 
         "http://data.americanartcollaborative.org/GM/constituent/biss_earl_jr": {
             "musuem_name": "Earl Biss Jr.", 
-            "musuem_year": "1947", 
+            "musuem_year": "1947-01-01", 
             "ulan_birth_year": "1947", 
             "ulan_name": "Biss, Earl"
         }, 
         "http://data.americanartcollaborative.org/GM/constituent/bobby_c_martin": {
             "musuem_name": "Bobby C. Martin", 
-            "musuem_year": "1957", 
+            "musuem_year": "1957-01-01", 
             "ulan_birth_year": "1957", 
             "ulan_name": "Martin, Bobby"
         }, 
         "http://data.americanartcollaborative.org/GM/constituent/borein_edward_john": {
             "musuem_name": "John Edward Borein", 
-            "musuem_year": "1872", 
+            "musuem_year": "1872-01-01", 
             "ulan_birth_year": "1872", 
             "ulan_name": "Borein, Edward"
         }, 
         "http://data.americanartcollaborative.org/GM/constituent/currier_ives": {
             "musuem_name": "Currier & Ives", 
-            "musuem_year": "1834"
+            "musuem_year": "1834-01-01"
+        }, 
+        "http://data.americanartcollaborative.org/GM/constituent/edgar_paxson_s": {
+            "ulan_birth_year": "1852", 
+            "ulan_name": "Paxson, Edgar Samuel"
+        }, 
+        "http://data.americanartcollaborative.org/GM/constituent/fechin_nicolai": {
+            "ulan_birth_year": "1881", 
+            "ulan_name": "Feshin, Nikolay"
+        }, 
+        "http://data.americanartcollaborative.org/GM/constituent/francis_parsons": {
+            "ulan_birth_year": "1733", 
+            "ulan_name": "Parsons, Francis"
         }, 
         "http://data.americanartcollaborative.org/GM/constituent/hays_jacob_william": {
             "musuem_name": "William Jacob Hays", 
-            "musuem_year": "1830", 
+            "musuem_year": "1830-01-01", 
             "ulan_birth_year": "1830", 
             "ulan_name": "Hays, William Jacob, Sr."
         }, 
         "http://data.americanartcollaborative.org/GM/constituent/jefferson_thomas": {
             "musuem_name": "Thomas Jefferson", 
-            "musuem_year": "1743", 
+            "musuem_year": "1743-01-01", 
             "ulan_birth_year": "1743", 
             "ulan_name": "Jefferson, Thomas"
         }, 
+        "http://data.americanartcollaborative.org/GM/constituent/john_sargent_singer": {
+            "ulan_birth_year": "1856", 
+            "ulan_name": "Sargent, John Singer"
+        }, 
         "http://data.americanartcollaborative.org/GM/constituent/mauzey_merritt_thomas": {
             "musuem_name": "Merritt Thomas Mauzey", 
-            "musuem_year": "1898", 
+            "musuem_year": "1898-01-01", 
             "ulan_birth_year": "1898", 
             "ulan_name": "Mauzey, Merritt"
         }
@@ -74,12 +98,12 @@
         ]
     }, 
     "precision": 0.996031746031746, 
-    "recall": 0.9653846153846154, 
+    "recall": 0.943609022556391, 
     "success": 251, 
     "total": [
         252, 
         294, 
-        260.0
+        266.0
     ], 
     "true_negatives": {
         "http://data.americanartcollaborative.org/GM/constituent/a_anderson_john": [

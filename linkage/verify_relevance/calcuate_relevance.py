@@ -40,7 +40,7 @@ def calculate_relevance(ipfile, museum):
 	total_uri_set = set()
 	sparql = SPARQLWrapper(SPARQL_ENDPOINT)
 	sparql.setReturnFormat(JSON)
-	museum_dict = {'GM': 'GM', 'IMA': 'ima', 'PUAM':'puam', 'WAM': 'wam'}
+	museum_dict = {'AUTRY':'autry', 'CCMA':'ccma', 'GM': 'GM', 'IMA': 'ima', 'PUAM':'puam', 'WAM': 'wam'}
 
 	data_dict = defaultdict(list)
 	query = ''
@@ -56,7 +56,6 @@ def calculate_relevance(ipfile, museum):
 	get_query = get_query.replace('MUSUEM_URI', museum_uri)
 	sparql.setQuery(get_query)
 	result = sparql.query().convert()
-
 	ground_truth = {}
 	#convert to dict {'Actor_URI': Ulan_URI}
 	for v in result['results']['bindings']:

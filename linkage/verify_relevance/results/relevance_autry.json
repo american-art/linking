@@ -1,1 +1,315 @@
-{"precision": 0}
+{
+    "f_score": 0.8333333333333333, 
+    "false_negatives": {
+        "http://data.americanartcollaborative.org/autry/maker/bartowrick": {
+            "musuem_name": "Bartow, Rick", 
+            "musuem_year": "1946-1-1", 
+            "ulan_birth_year": "1946", 
+            "ulan_name": "Bartow, Rick E."
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/bischofffranz": {
+            "musuem_name": "Bischoff, Franz", 
+            "musuem_year": "1864-1-1", 
+            "ulan_birth_year": "1864", 
+            "ulan_name": "Bischoff, Franz A."
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/bowenjohnt": {
+            "ulan_birth_year": "1801", 
+            "ulan_name": "Bowen, John T."
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/canoalonso": {
+            "ulan_birth_year": "1601", 
+            "ulan_name": "Cano, Alonso"
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/cronaurudolf": {
+            "musuem_name": "Cronau, Rudolf", 
+            "musuem_year": "1855-1-1", 
+            "ulan_birth_year": "1855", 
+            "ulan_name": "Cronau, Rudolf Daniel Ludwig"
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/currierandives": {}, 
+        "http://data.americanartcollaborative.org/autry/maker/kuhnbob": {
+            "musuem_name": "Kuhn, Bob", 
+            "musuem_year": "1920-1-1", 
+            "ulan_birth_year": "1920", 
+            "ulan_name": "Kuhn, Robert F."
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/narjoterneste": {
+            "musuem_name": "Narjot, Ernest E.", 
+            "musuem_year": "1827-1-1", 
+            "ulan_birth_year": "1826", 
+            "ulan_name": "Narjot de Francheville, Ernest-\u00c9tienne"
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/pointsusan": {
+            "musuem_name": "Point, Susan", 
+            "musuem_year": "1952-1-1", 
+            "ulan_birth_year": "1952", 
+            "ulan_name": "Point, Susan A."
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/romanbronzeworks": {}, 
+        "http://data.americanartcollaborative.org/autry/maker/silverhorn": {
+            "ulan_birth_year": "1861", 
+            "ulan_name": "Silverhorn"
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/tapialuiseligio": {
+            "musuem_name": "Tapia, Luis Eligio", 
+            "musuem_year": "1950-1-1", 
+            "ulan_birth_year": "1950", 
+            "ulan_name": "Tapia, Luis"
+        }, 
+        "http://data.americanartcollaborative.org/autry/maker/tiffanyandcompany": {}, 
+        "http://data.americanartcollaborative.org/autry/maker/whittredgethomasworthington": {
+            "musuem_name": "Whittredge, Thomas Worthington", 
+            "musuem_year": "1820-1-1", 
+            "ulan_birth_year": "1820", 
+            "ulan_name": "Whittredge, Worthington"
+        }
+    }, 
+    "false_positives": {
+        "http://data.americanartcollaborative.org/autry/maker/berninghausoscaredmund": [
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500029522", 
+                "museum_name": "Berninghaus, Oscar Edmund", 
+                "similarity": 0.9780808080808082, 
+                "ulan_name": "Berminghaus, Oscar Edmund", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500166572"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/farnyhenry": [
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500005451", 
+                "museum_name": "Farny, Henry", 
+                "similarity": 0.9466666666666668, 
+                "ulan_name": "Farnam, Henry", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500049682"
+            }, 
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500005451", 
+                "museum_name": "Farny, Henry", 
+                "similarity": 0.9066666666666667, 
+                "ulan_name": "Farr\u00e9, Henry", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500138062"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/melroseandrew": [
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500021099", 
+                "museum_name": "Melrose, Andrew", 
+                "similarity": 0.9266666666666666, 
+                "ulan_name": "Melee, Andrew", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500331443"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/schoefftaugust": [
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500030254", 
+                "museum_name": "Schoefft, August", 
+                "similarity": 0.9319444444444445, 
+                "ulan_name": "Schaeffer, August", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500059618"
+            }, 
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500030254", 
+                "museum_name": "Schoefft, August", 
+                "similarity": 0.9229166666666666, 
+                "ulan_name": "Schi\u00f6tt, August", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500054550"
+            }, 
+            {
+                "correct_ulan_uri": "http://vocab.getty.edu/ulan/500030254", 
+                "museum_name": "Schoefft, August", 
+                "similarity": 0.9125, 
+                "ulan_name": "Schubert, August", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500170713"
+            }
+        ]
+    }, 
+    "precision": 0.9322033898305084, 
+    "recall": 0.7534246575342466, 
+    "success": 55, 
+    "total": [
+        59, 
+        73, 
+        73.0
+    ], 
+    "true_negatives": {
+        "http://data.americanartcollaborative.org/autry/maker/antonbill": [
+            {
+                "museum_name": "Anton, Bill", 
+                "similarity": 0.9214285714285714, 
+                "ulan_name": "Bailly, Antoine", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500094579"
+            }, 
+            {
+                "museum_name": "Anton, Bill", 
+                "similarity": 0.9214285714285714, 
+                "ulan_name": "Bofill, Antoine", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500038388"
+            }, 
+            {
+                "museum_name": "Anton, Bill", 
+                "similarity": 0.9111111111111112, 
+                "ulan_name": "Walton, Bill", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500346964"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/bakergeorgeh": [
+            {
+                "museum_name": "Baker, George H.", 
+                "similarity": 0.921904761904762, 
+                "ulan_name": "Barrett, George H.", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500042651"
+            }, 
+            {
+                "museum_name": "Baker, George H.", 
+                "similarity": 0.9125, 
+                "ulan_name": "Holbrook, George Baker", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500332706"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/bodmerkarl": [
+            {
+                "museum_name": "Bodmer, Karl", 
+                "similarity": 1.0, 
+                "ulan_name": "Bodmer, Karl", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500006745"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/carlsongeorge": [
+            {
+                "museum_name": "Carlson, George", 
+                "similarity": 0.9598214285714286, 
+                "ulan_name": "Clarkson, George", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500062115"
+            }, 
+            {
+                "museum_name": "Carlson, George", 
+                "similarity": 0.9410714285714286, 
+                "ulan_name": "Charlton, George", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500016074"
+            }, 
+            {
+                "museum_name": "Carlson, George", 
+                "similarity": 0.9321428571428572, 
+                "ulan_name": "Corson, George", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500233293"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/catlingeorge": [
+            {
+                "museum_name": "Catlin, George", 
+                "similarity": 1.0, 
+                "ulan_name": "Catlin, George", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500004854"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/chavezroberto": [
+            {
+                "museum_name": "Chavez, Roberto", 
+                "similarity": 0.9857142857142858, 
+                "ulan_name": "Chavez, Robert", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500299816"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/fostertony": [
+            {
+                "museum_name": "Foster, Tony", 
+                "similarity": 1.0, 
+                "ulan_name": "Foster, Tony", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500139435"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/gastjohn": [
+            {
+                "museum_name": "Gast, John", 
+                "similarity": 0.9333333333333333, 
+                "ulan_name": "Galt, John", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500073461"
+            }, 
+            {
+                "museum_name": "Gast, John", 
+                "similarity": 0.9333333333333333, 
+                "ulan_name": "Gaut, John", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500190191"
+            }, 
+            {
+                "museum_name": "Gast, John", 
+                "similarity": 0.9195238095238094, 
+                "ulan_name": "Galster, Johan", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500255583"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/hydedoug": [
+            {
+                "museum_name": "Hyde, Doug", 
+                "similarity": 0.9571428571428571, 
+                "ulan_name": "Hyde, Douglas", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500126865"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/murdockjohn": [
+            {
+                "museum_name": "Murdock, John", 
+                "similarity": 0.9714285714285714, 
+                "ulan_name": "Murdoch, John", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500336421"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/owenbill": [
+            {
+                "museum_name": "Owen, Bill", 
+                "similarity": 0.98, 
+                "ulan_name": "Owens, Bill", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500204781"
+            }, 
+            {
+                "museum_name": "Owen, Bill", 
+                "similarity": 0.9166666666666667, 
+                "ulan_name": "Owen, Will", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500012435"
+            }, 
+            {
+                "museum_name": "Owen, Bill", 
+                "similarity": 0.9166666666666667, 
+                "ulan_name": "Wenk, Bill", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500262656"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/prattwilliamhenry": [
+            {
+                "museum_name": "Pratt, William Henry", 
+                "similarity": 0.91, 
+                "ulan_name": "Pigott, William Henry", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500080479"
+            }, 
+            {
+                "museum_name": "Pratt, William Henry", 
+                "similarity": 0.9047619047619048, 
+                "ulan_name": "Pratt, Henry L.", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500001874"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/robertsonstewart": [
+            {
+                "museum_name": "Robertson, Stewart", 
+                "similarity": 0.9666666666666667, 
+                "ulan_name": "Stewart, Robert", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500191676"
+            }, 
+            {
+                "museum_name": "Robertson, Stewart", 
+                "similarity": 0.9063492063492063, 
+                "ulan_name": "Stuart, Robert", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500055631"
+            }
+        ], 
+        "http://data.americanartcollaborative.org/autry/maker/whiteswan": [
+            {
+                "museum_name": "White Swan", 
+                "similarity": 1.0, 
+                "ulan_name": "White Swan", 
+                "ulan_uri": "http://vocab.getty.edu/ulan/500056772"
+            }
+        ]
+    }
+}
