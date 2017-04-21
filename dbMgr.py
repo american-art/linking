@@ -732,7 +732,9 @@ def dumpCurationResults(args,filepath):
                     a = {}
                     if tid in q['tags']:
                         # Generate and dump triples
-                        s = "<"+q["uri1"]+"> <http://www.w3.org/2002/07/owl#sameAs> <"+q["uri2"]+"> .\n"
+                        s = "<"+q["uri1"]+"> <http://www.w3.org/2004/02/skos/core#exactMatch> <"+q["uri2"]+"> .\n"
+                        f.writelines(s)
+                        s = "<"+q["uri2"]+"> <http://www.w3.org/2004/02/skos/core#inScheme> <http://vocab.getty.edu/ulan> .\n"
                         f.writelines(s)
         
         #print "Data dumped in file ", f.name
