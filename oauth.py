@@ -66,10 +66,10 @@ class FacebookSignIn(OAuthSignIn):
                 oauth_session = self.service.get_auth_session(data=data,decoder=self.custom_decoder)
             me = oauth_session.get('me?fields=id,email,name',params={'format': 'json'}).json()
         except ConnectionError:
-            #print "Connection Error in getting data from Facebook\n"
+            #print("Connection Error in getting data from Facebook\n")
             logging.info("Connection Error in getting data from Facebook\n")
             return (None, None, None)
 
-        #print "Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name'))
+        #print("Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name')))
         logging.info("Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'), me.get('email'), me.get('name')))
         return (me.get('id'), me.get('email'), me.get('name'))

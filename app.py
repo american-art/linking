@@ -63,7 +63,7 @@ def login():
     # route for handling the login page logic
     if request.method == 'POST': 
     
-        #print request.form
+        #print(request.form)
         logging.info('Input received: {}'.format(request.form))
         
         if not request.form['uname']:
@@ -106,7 +106,7 @@ def register():
     # route for handling the login page logic
     if request.method == 'POST': 
     
-        #print request.form
+        #print(request.form)
         logging.info('Input received: {}'.format(request.form))
         
         if not request.form['uname']:
@@ -133,7 +133,7 @@ def register():
         userid = request.form['uname']
         name = request.form['name']
         pw = encrypt_password(request.form['pw'].encode('utf-8'))
-        #print userid, name, pw
+        #print(userid, name, pw)
         logging.info('{} {} {}'.format(userid, name, pw))
         
         # Add to user database
@@ -155,7 +155,7 @@ class userMgr(Resource):
     
     # Update User (Curator) profile. 
     def put(self):
-        #print "Input received: {} \n".format(request.json)
+        #print("Input received: {} \n".format(request.json))
         logging.info('Input received: {}'.format(request.json))
         
         if not current_user.is_authenticated:
@@ -166,7 +166,7 @@ class userMgr(Resource):
         
         # Update tag for a user
         if 'tags' in request.json:
-            #print request.json["tags"], type(request.json["tags"])
+            #print(request.json["tags"], type(request.json["tags"]))
             #logging.info("{}, {}".format(request.json["tags"], type(request.json["tags"])))
             if not isinstance(request.json["tags"], list):
                 return {'error': 'Tags type should be list of String'}, 400
@@ -174,7 +174,7 @@ class userMgr(Resource):
             tags = []
             for tag in request.json['tags']:
                 # Temporary fix 
-                if tag in museums.keys():
+                if tag in list(museums.keys()):
                     t = dbC[dname]["tag"].find_one({'tagname':tag.lower()})
                     if t == None:
                         message = 'tag with name <{}> does not exist'.format(tag)
@@ -185,15 +185,19 @@ class userMgr(Resource):
         
         # Update name of a user
         if 'name' in request.json:
-            #print request.json["name"], type(request.json["name"])
-            logging.info("{], {}".format(request.json["name"], type(request.json["name"])))
-            if not isinstance(request.json["name"], str) and not isinstance(request.json["name"], unicode):
-                return {'error': 'Name type should by String'}, 400
+            #print(request.json["name"], type(request.json["name"]))
+            logging.info("{}, {}".format(request.json["name"], type(request.json["name"])))
+            if sys.version_info[0] < 3:
+                if not isinstance(request.json["name"], str) and not isinstance(request.json["name"], unicode):
+                    return {'error': 'Name type should by String'}, 400
+            else:
+                if not isinstance(request.json["name"], str):
+                    return {'error': 'Name type should by String'}, 400
             dbC[dname]["curator"].find_one_and_update({'uid':current_user.email}, {'$set': {'name':request.json["name"]}})
         
         # Update rating of a user
         if 'rating' in request.json:
-            #print request.json["name"], type(request.json["name"])
+            #print(request.json["name"], type(request.json["name"]))
             logging.info("{}, {}".format(request.json["name"], type(request.json["name"])))
             if not isinstance(request.json["rating"], int):
                 return {'error': 'Rating type should by integer'}, 400
@@ -270,7 +274,7 @@ def oauth_callback(provider):
     
     user = User.query.filter_by(email=email).first()
     if not user:
-        #print "Created new user with email",email
+        #print("Created new user with email",email)
         logging.info("Created new user with email : {}".format(email))
         user = User(email=email)
         usrdb.session.add(user)
@@ -291,7 +295,7 @@ class questMgr(Resource):
 
     # Retrieve set of questions and send it as a response
     def get(self):
-        #print "Input received: {} \n".format(request.args)
+        #print("Input received: {} \n".format(request.args))
         logging.info("Input received: {}".format(request.args))
         
         if not current_user.is_authenticated:
@@ -316,7 +320,7 @@ class questMgr(Resource):
 class ansMgr(Resource):
     
     def put(self):
-        #print "Input received: {} \n".format(request.json)
+        #print("Input received: {} \n".format(request.json))
         logging.info("Input received: {}".format(request.json))
         
         if not current_user.is_authenticated:
@@ -402,7 +406,7 @@ def populateQuestionsWithFields(questions, stats):
             output += [{'qid': str(question['_id']), "score":format(question["record linkage score"], '.3f'),
                 "ExactMatch":matches["ExactMatch"],"Unmatched":matches['Unmatched']}]
         
-        #print output
+        #print(output)
         #logging.info(output)
     return output, "success"
 
@@ -410,7 +414,7 @@ def populateQuestionsWithFields(questions, stats):
 class downloadMgr(Resource):
     
     def post(self):
-        #print "PUT Input received: {} \n".format(request.json)
+        #print("PUT Input received: {} \n".format(request.json))
         logging.info("PUT Input received: {}".format(request.json))
         
         if not current_user.is_authenticated:
@@ -421,7 +425,7 @@ class downloadMgr(Resource):
         return jsonify({}, 200)
     
     def get(self):
-        #print "Input received: {} \n".format(request.args)
+        #print("Input received: {} \n".format(request.args))
         logging.info("Input received: {}".format(request.args))
         
         if not current_user.is_authenticated:
@@ -450,7 +454,7 @@ if __name__ == '__main__':
 
     resetD = False
     resetU = False
-    resetDS = [key for key in museums.keys() if key != "ulan"]
+    resetDS = [key for key in list(museums.keys()) if key != "ulan"]
     (options, args) = parser.parse_args()
     if options.reset_dataset and options.reset_dataset.lower() == "true":
         resetD = True

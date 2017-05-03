@@ -23,7 +23,7 @@ def authorizeFacebookUser():
     if request.method == 'POST':
         
         # Get command pass from login page and verify
-        #print request.form
+        #print(request.form)
         logging.info('Input received: {}'.format(request.form))
         if request.form['pw'] == curationpass:
             return render_template('login_fb.html', getcommanpass=False)
@@ -63,7 +63,7 @@ def show_user_profile():
         
         # Initialize per museum stats 
         stats = {}
-        for tag in museums.keys():
+        for tag in list(museums.keys()):
             stats[tag] = {"matched":0,"unmatched":0,"no-conclusion":0}
         
         for a in answers:
@@ -97,7 +97,7 @@ def show_results_page():
 def get_museum_stats():
     tag = request.args['tag'].lower()
     
-    #print "Received stats request for tag : "+tag
+    #print("Received stats request for tag : "+tag)
     logging.info("Received stats request for tag : {}".format(tag))
     
     if current_user.is_authenticated:
