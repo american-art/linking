@@ -1,4 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
+from urllib2 import URLError
 import os, sys, json, time
 
 map = {'ulan':"http://vocab.getty.edu/sparql",
@@ -24,12 +25,18 @@ for f in files:
     else:
         sparql = SPARQLWrapper(map['aac'])
         
-    print "Downloading ",base," dataset"
-        
     sparql.setQuery(f_in.read())
     sparql.setReturnFormat(JSON)
     sparql.setTimeout(360)
-    results = sparql.query().convert()
+    while True:
+        print "Downloading ",base," dataset"
+        try:
+            results = sparql.query().convert()
+            break
+        except URLError:
+            print("Connection to Sparql server failed! Trying again in five seconds!")
+            time.sleep(5)
+    
     f_in.close()
                 
     # Save the results
@@ -39,4 +46,4 @@ for f in files:
         out.write("\n")
     out.close()
     
-    time.sleep(60)
+    time.sleep(10)
