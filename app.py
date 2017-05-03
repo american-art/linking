@@ -39,7 +39,7 @@ def verify_password(enc_password, raw_password):
     return hsh == get_hexdigest(algo, salt, raw_password)
 
 def isValidAccount(email):
-    file = open("emails.txt",'r')
+    file = open("emails.txt", 'r')
     for line in file.readlines():
         if line.strip().lower() == email.lower():
             return True
@@ -168,7 +168,7 @@ class userMgr(Resource):
         if 'tags' in request.json:
             #print request.json["tags"], type(request.json["tags"])
             #logging.info("{}, {}".format(request.json["tags"], type(request.json["tags"])))
-            if type(request.json["tags"]) != list:
+            if not isinstance(request.json["tags"], list):
                 return {'error': 'Tags type should be list of String'}, 400
                 
             tags = []
@@ -181,27 +181,27 @@ class userMgr(Resource):
                         return {'error': message}, 400
                     tags = tags + [t["_id"]]
 
-            dbC[dname]["curator"].find_one_and_update({'uid':current_user.email},{'$set': {'tags':tags}})
+            dbC[dname]["curator"].find_one_and_update({'uid':current_user.email}, {'$set': {'tags':tags}})
         
         # Update name of a user
         if 'name' in request.json:
             #print request.json["name"], type(request.json["name"])
             logging.info("{], {}".format(request.json["name"], type(request.json["name"])))
-            if type(request.json["name"]) != str and type(request.json["name"]) != unicode:
+            if not isinstance(request.json["name"], str) and not isinstance(request.json["name"], unicode):
                 return {'error': 'Name type should by String'}, 400
-            dbC[dname]["curator"].find_one_and_update({'uid':current_user.email},{'$set': {'name':request.json["name"]}})
+            dbC[dname]["curator"].find_one_and_update({'uid':current_user.email}, {'$set': {'name':request.json["name"]}})
         
         # Update rating of a user
         if 'rating' in request.json:
             #print request.json["name"], type(request.json["name"])
             logging.info("{}, {}".format(request.json["name"], type(request.json["name"])))
-            if type(request.json["rating"]) != int:
+            if not isinstance(request.json["rating"], int):
                 return {'error': 'Rating type should by integer'}, 400
             if request.json["rating"] > 5 or request.json["rating"] < 0:
                 return {'error': 'Rating should be between 0-5 only'}, 400
-            dbC[dname]["curator"].find_one_and_update({'uid':current_user.email},{'$set': {'rating':request.json["rating"]}})
+            dbC[dname]["curator"].find_one_and_update({'uid':current_user.email}, {'$set': {'rating':request.json["rating"]}})
         
-        u = dbC[dname]["curator"].find_one({'uid':current_user.email},projection={'_id':False})
+        u = dbC[dname]["curator"].find_one({'uid':current_user.email}, projection={'_id':False})
         
         return {"username":u["uid"],"name":u["name"],"tags":getTags(u),"rating":u["rating"]}
     
@@ -211,7 +211,7 @@ class userMgr(Resource):
             return {'error':"Couldn't authenticate user."}, 400
         
         # getStats about all the questions answered by this user
-        u = dbC[dname]["curator"].find_one({'uid':current_user.email},projection={'_id':False})
+        u = dbC[dname]["curator"].find_one({'uid':current_user.email}, projection={'_id':False})
         keys = [t for t in sorted(museums.keys()) if t != "ulan"]
         return {"username":u["uid"],"name":u["name"],"tags":getTags(u),"rating":u["rating"],'payload':museums,'keys':keys}
     
@@ -310,7 +310,7 @@ class questMgr(Resource):
             else:
                 stats = False
 
-        return getQuestionsForUser(count,stats)
+        return getQuestionsForUser(count, stats)
     
 # Handle RESTful API for submitting answer
 class ansMgr(Resource):
@@ -338,31 +338,31 @@ class ansMgr(Resource):
         
         a_value = request.json['value']
         
-        if a_value not in [1,2,3] :
+        if a_value not in [1, 2, 3] :
             return {'error': 'value should be either 1 (Yes) or 2 (No) or 3 (Not Sure) '}, 400
         
         qid = request.json['qid']
         uid = current_user.email
         answer = {"value":a_value,"comment":a_comment,"author":uid,"qid":qid}
         
-        rsp = submitAnswer(qid,answer,uid)
+        rsp = submitAnswer(qid, answer, uid)
         logging.info("{}".format(rsp["message"]))
         if rsp["status"] == False:
-            return {'error':rsp["message"]},400
+            return {'error':rsp["message"]}, 400
         else:
             return {'error':rsp["message"]}
 
 # Get question and related fields in nicer format for current user
-def getQuestionsForUser(count,stats):
+def getQuestionsForUser(count, stats):
     # current user
     uid = current_user.email
 
     # Get questions
-    questions,rsp = getQuestionsForUID(uid, count)
+    questions, rsp = getQuestionsForUID(uid, count)
     
     # Get matching and non matching fields based on config file and sparql queries
     if questions != None and questions != []:
-        q,rsp = populateQuestionsWithFields(questions, stats)
+        q, rsp = populateQuestionsWithFields(questions, stats)
         if q != []:
             return q
         else:
@@ -404,7 +404,7 @@ def populateQuestionsWithFields(questions, stats):
         
         #print output
         #logging.info(output)
-    return output,"success"
+    return output, "success"
 
 # Handle RESTful API for submitting answer
 class downloadMgr(Resource):
@@ -417,8 +417,8 @@ class downloadMgr(Resource):
             return redirect(url_for('index'))
         
         # call dump results which should create dump results into json file and save as results.json
-        dumpCurationResults(request.json,None)
-        return jsonify({},200)
+        dumpCurationResults(request.json, None)
+        return jsonify({}, 200)
     
     def get(self):
         #print "Input received: {} \n".format(request.args)
@@ -438,14 +438,14 @@ class downloadMgr(Resource):
             else:
                 return {'error':"Download type not supported or invalid."}, 400
         
-        return send_from_directory(directory=rootdir,filename=filename ,as_attachment=True)
+        return send_from_directory(directory=rootdir, filename=filename, as_attachment=True)
         
 if __name__ == '__main__':
     
     # Process command line options
     parser = OptionParser()
-    parser.add_option("-d", "--reset_dataset", dest="reset_dataset", type="string",help="Reset data set(s) (value: True/False). Use -n option to reset specific. Default is reset all.")
-    parser.add_option("-n", "--dataset_name", dest="dataset_name", type="string",help="List of dataset(s) to be reset (value: 'npg saam').")
+    parser.add_option("-d", "--reset_dataset", dest="reset_dataset", type="string", help="Reset data set(s) (value: True/False). Use -n option to reset specific. Default is reset all.")
+    parser.add_option("-n", "--dataset_name", dest="dataset_name", type="string", help="List of dataset(s) to be reset (value: 'npg saam').")
     parser.add_option("-u", "--reset_users", dest="reset_users", type="string", help="Reset all users (value: True/False). This works only with -d option.")
 
     resetD = False
@@ -468,4 +468,4 @@ if __name__ == '__main__':
     api.add_resource(downloadMgr, '/download', endpoint='download')
     
     # Start the app
-    app.run(threaded=True,debug=False) 
+    app.run(threaded=True)

@@ -38,8 +38,8 @@ class FacebookSignIn(OAuthSignIn):
             name='facebook',
             client_id=self.consumer_id,
             client_secret=self.consumer_secret,
-            authorize_url='https://graph.facebook.com/oauth/authorize',
             access_token_url='https://graph.facebook.com/oauth/access_token',
+            authorize_url='https://graph.facebook.com/oauth/authorize',
             base_url='https://graph.facebook.com/v2.7'
         )
 
@@ -49,22 +49,27 @@ class FacebookSignIn(OAuthSignIn):
             response_type='code',
             redirect_uri=self.get_callback_url())
         )
+        
+    def custom_decoder(self, payload):
+        return json.loads(payload.decode('utf-8'))
 
     def callback(self):
         if 'code' not in request.args:
             return None, None, None
-            
+
+        data={'code': request.args['code'],'grant_type': 'authorization_code','redirect_uri': self.get_callback_url()}
+        
         try:
-            oauth_session = self.service.get_auth_session(
-                data={'code': request.args['code'],
-                    'grant_type': 'authorization_code',
-                    'redirect_uri': self.get_callback_url()},
-                decoder=json.loads
-            )   
-            me = oauth_session.get('me?fields=id,email,name').json()
+            if sys.version_info[0] < 3:
+                oauth_session = self.service.get_auth_session(data=data,decoder=json.loads)
+            else:
+                oauth_session = self.service.get_auth_session(data=data,decoder=self.custom_decoder)
+            me = oauth_session.get('me?fields=id,email,name',params={'format': 'json'}).json()
         except ConnectionError:
-            return (None,None,None)
+            #print "Connection Error in getting data from Facebook\n"
+            logging.info("Connection Error in getting data from Facebook\n")
+            return (None, None, None)
 
         #print "Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name'))
-        logging.info("Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'),me.get('email'),me.get('name')))
+        logging.info("Facebook OAuth returned : {}, {}, {} \n".format(me.get('id'), me.get('email'), me.get('name')))
         return (me.get('id'), me.get('email'), me.get('name'))

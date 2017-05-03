@@ -1,10 +1,13 @@
+from config import *
 import csv, datetime, json, os
-from urllib2 import HTTPError, URLError
+if sys.version_info[0] < 3:
+    from urllib2 import HTTPError, URLError
+else:
+    from urllib.error import HTTPError, URLError
 from random import randint
 from pprint import pprint
 from bson.objectid import ObjectId
 from SPARQLWrapper import SPARQLWrapper, JSON, SPARQLExceptions
-from config import *
 
 # dbC and dname are mongoDb based database for entities and their curation data
 def db_init(resetU, resetD, resetDS):
@@ -19,9 +22,9 @@ def db_init(resetU, resetD, resetDS):
         
             # Backup data
             export = {"data":{"tags":resetDS,"type":"triples"}}
-            dumpCurationResults(export,os.path.join(rootdir,"backup.nt"))
-            export = {"data":{"codes":[3,4,5], "tags":resetDS,"type":"jsonlines"}}
-            dumpCurationResults(export,os.path.join(rootdir,"backup.json"))
+            dumpCurationResults(export, os.path.join(rootdir, "backup.nt"))
+            export = {"data":{"codes":[3, 4, 5], "tags":resetDS,"type":"jsonlines"}}
+            dumpCurationResults(export, os.path.join(rootdir, "backup.json"))
         
             # Remove all data
             cleanDatabases()
@@ -35,9 +38,9 @@ def db_init(resetU, resetD, resetDS):
         
             # Backup data
             export = {"data":{"tags":resetDS,"type":"triples"}}
-            dumpCurationResults(export,os.path.join(rootdir,"backup.nt"))
-            export = {"data":{"codes":[3,4,5], "tags":resetDS,"type":"jsonlines"}}
-            dumpCurationResults(export,os.path.join(rootdir,"backup.json"))
+            dumpCurationResults(export, os.path.join(rootdir, "backup.nt"))
+            export = {"data":{"codes":[3, 4, 5], "tags":resetDS,"type":"jsonlines"}}
+            dumpCurationResults(export, os.path.join(rootdir, "backup.json"))
         
             # Reset dataset(s)
             temp = [key for key in museums.keys() if key != "ulan"]
@@ -129,7 +132,7 @@ def populateTags():
 def updateConfig():
     
     # Update threshold values from file
-    file = open("threshold.txt",'r')
+    file = open("threshold.txt", 'r')
     for line in file.readlines():
         if '#' in line:
             continue
@@ -203,7 +206,7 @@ def populateQuestions(datasets):
     # Reload dataset(s)
     for dataset in datasets:
         f = dataset+'.json'
-        f = os.path.join(questiondir,f)
+        f = os.path.join(questiondir, f)
         populateQuestionsFromJSON(f)
 
     # Create new index only when all datasets are being reset
@@ -214,7 +217,7 @@ def populateQuestions(datasets):
         dbC[dname]["question"].create_index([("status", ASCENDING)])
         dbC[dname]["question"].create_index([("decision", ASCENDING)])
         dbC[dname]["question"].create_index([("record linkage score", ASCENDING)])
-        dbC[dname]["question"].create_index([("lastSeen",DESCENDING)])
+        dbC[dname]["question"].create_index([("lastSeen", DESCENDING)])
         #printDatabase("question")
 
 # Populate default set of questions from json file
@@ -237,7 +240,7 @@ def populateQuestionsFromJSON(f):
         # Build document
         qe = {"status":statuscodes["NotStarted"],
               "lastSeen": datetime.datetime.utcnow(),
-              "tags":[dbC[dname]["tag"].find_one({'tagname':tag1})['_id'],dbC[dname]["tag"].find_one({'tagname':tag2})['_id']],
+              "tags":[dbC[dname]["tag"].find_one({'tagname':tag1})['_id'], dbC[dname]["tag"].find_one({'tagname':tag2})['_id']],
               "uri1":q["id1"],
               "uri2":q["id2"],
               "decision": [], # Should be updated in submit answer
@@ -256,7 +259,7 @@ def populateQuestionsFromJSON(f):
             break
     
     #print "Populated {} questions from {}".format(count,f)
-    logging.info("Populated {} questions from {}".format(count,f))
+    logging.info("Populated {} questions from {}".format(count, f))
     #printDatabase("question")
     
 #Find tag from the uri
@@ -275,7 +278,7 @@ def getTags(entity):
     return tags
 
 # Return true if uri1 ranks hire than uri2
-def checkURIOrdering(uri1,uri2):
+def checkURIOrdering(uri1, uri2):
     for tag in museums.keys():
         if museums[tag]['uri'] in uri1:
             rank1 = museums[tag]['ranking']
@@ -288,7 +291,7 @@ def checkURIOrdering(uri1,uri2):
         return False
 
 # Retrieve set of questions from database based on tags, lastseen, unanswered vs in progress
-def getQuestionsForUID(uid,count):
+def getQuestionsForUID(uid, count):
     
     # If User with uid not present return error, otherwise get tags for user
     userOid = dbC[dname]["curator"].find_one({'uid':uid})
@@ -372,7 +375,7 @@ def getQuestionsForUID(uid,count):
         
         # Remove original question from list, sort temp list and add it back
         q.remove(question)
-        temp = sorted(temp,key=lambda x:x["record linkage score"],reverse=True)
+        temp = sorted(temp, key=lambda x:x["record linkage score"], reverse=True)
         for t in temp:
             # Ideally this check is not necessary, but this is required due to 
             # issues of repeat ulan pairs and limit of three causing not all variants to be answered.
@@ -388,7 +391,7 @@ def getQuestionsForUID(uid,count):
             {'$set': {'lastSeen':datetime.datetime.utcnow()}},
             return_document=ReturnDocument.AFTER) ]
             
-    return q_new,"success"
+    return q_new, "success"
 
 # Basic Pre processing to help matching obvious values
 def preProcess(value):
@@ -396,16 +399,28 @@ def preProcess(value):
     #print "Pre processing : "+str(value)+" with type : "+str(type(value))
     #logging.info("Pre processing : {} with type : {}".format(str(value),str(type(value))))
     
-    if type(value) == str or type(value) == int or type(value) == unicode:
-        # First convert int to strings
-        if type(value) == int:
-            value = str(value)
+    if sys.version_info[0] < 3:
+        if isinstance(value, str) or isinstance(value, int) or isinstance(value, unicode):
+            # First convert int to strings
+            if isinstance(value, int):
+                value = str(value)
 
-        # Remove leading and trailing whitespace and do lower case
-        value = value.strip().lower()
+            # Remove leading and trailing whitespace and do lower case
+            value = value.strip().lower()
 
-        # Covert to ASCII just for the comparison
-        value = unidecode(value)
+            # Covert to ASCII just for the comparison
+            value = unidecode(value)
+    else:
+        if isinstance(value, str) or isinstance(value, int):
+            # First convert int to strings
+            if isinstance(value, int):
+                value = str(value)
+
+            # Remove leading and trailing whitespace and do lower case
+            value = value.strip().lower()
+
+            # Covert to ASCII just for the comparison
+            value = unidecode(value)
     
     #print "Pre processed : "+str(value)+" with type : "+str(type(value))
     #logging.info("Pre processed : {} with type : {}".format(str(value),str(type(value))))
@@ -415,13 +430,13 @@ def preProcess(value):
 def retrieveProperties(uri):
 
     if '/ulan/' in uri: 
-        f = open('ulan.sparql','r')
+        f = open('ulan.sparql', 'r')
         sparql = SPARQLWrapper('http://vocab.getty.edu/sparql')
     else:
-        f = open('aac.sparql','r')
+        f = open('aac.sparql', 'r')
         sparql = SPARQLWrapper('http://data.americanartcollaborative.org/sparql')
     
-    sparql.setQuery(f.read().replace('???',uri))
+    sparql.setQuery(f.read().replace('???', uri))
     sparql.setReturnFormat(JSON)
     
     try:
@@ -466,7 +481,7 @@ def retrieveProperties(uri):
     f.close()
     return data
     
-def getMatches(left,right):
+def getMatches(left, right):
     # output format
     exactMatch = {"name":[],"value":[]}
     
@@ -600,9 +615,9 @@ def submitAnswer(qid, answer, uid):
                 break
     
         #print "current Y/N/NA: ",noYes,noNo,noNotSure
-        logging.info("current Y/N/NS: {}, {}, {}".format(noYes,noNo,noNotSure))
+        logging.info("current Y/N/NS: {}, {}, {}".format(noYes, noNo, noNotSure))
         #print "confidence Y-N/NA: ",confidenceYesNo,confidenceNotSure
-        logging.info("confidence Y-N/NS: {}-{}".format(confidenceYesNo,confidenceNotSure))
+        logging.info("confidence Y-N/NS: {}-{}".format(confidenceYesNo, confidenceNotSure))
     
         if noYes == confidenceYesNo:
             q['status'] = statuscodes["Agreement"] # Update to, Agreement 
@@ -655,7 +670,7 @@ def submitAnswer(qid, answer, uid):
 
 # museum - array of museum tags to retrieve , # status - array of different status codes to be retrieved
 # Parameter format: {"museum tag":[status codes...],...}
-def dumpCurationResults(args,filepath):
+def dumpCurationResults(args, filepath):
 
     tags = []
     if 'ulan' in args['data']['tags']:
@@ -669,9 +684,9 @@ def dumpCurationResults(args,filepath):
     # Download json lines 
     if args["data"]["type"] == "jlines":
         if filepath:
-            f = open(filepath,'w')
+            f = open(filepath, 'w')
         else:
-            f = open(os.path.join(rootdir,"results.json"),'w')
+            f = open(os.path.join(rootdir, "results.json"), 'w')
                 
         statuses = [int(s) for s in args['data']['codes']]
         for tag in tags:
@@ -716,9 +731,9 @@ def dumpCurationResults(args,filepath):
     # Download N3 triples for matches only
     elif args["data"]["type"] == "triples":
         if filepath:
-            f = open(filepath,'w')
+            f = open(filepath, 'w')
         else:
-            f = open(os.path.join(rootdir,"results.nt"),'w')
+            f = open(os.path.join(rootdir, "results.nt"), 'w')
             
         for tag in tags:
             # Find only questions that were matched

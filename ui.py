@@ -17,7 +17,7 @@ def before():
     #logging.info("Received request with header: {}".format(request.headers))
     pass
 
-@app.route('/validate',methods=['GET','POST'])
+@app.route('/validate', methods=['GET', 'POST'])
 def authorizeFacebookUser():
     
     if request.method == 'POST':
@@ -42,13 +42,13 @@ def show_curation():
 @app.route('/datatable')
 def datatable():
     if current_user.is_authenticated:
-        return render_template('datatable.html',server=server[:-1],keys=sorted(museums.keys()),data=returnCurationResults())
+        return render_template('datatable.html', server=server[:-1], keys=sorted(museums.keys()), data=returnCurationResults())
     else:
         return redirect(url_for('index'))
 
 @app.route('/spec')
 def show_specs():
-    return render_template('spec.html',server=server[7:-1])
+    return render_template('spec.html', server=server[7:-1])
 
 @app.route('/profile')
 def show_user_profile():
@@ -58,7 +58,7 @@ def show_user_profile():
         
         # Get User stats
         # getStats about all the questions answered by this user
-        u = dbC[dname]["curator"].find_one({'uid':current_user.email},projection={'_id':False})
+        u = dbC[dname]["curator"].find_one({'uid':current_user.email}, projection={'_id':False})
         answers = dbC[dname]["answer"].find({'author':current_user.email})
         
         # Initialize per museum stats 
@@ -82,7 +82,7 @@ def show_user_profile():
                     if a["value"] == 3:
                         stats[tag]["no-conclusion"] += 1
                     
-        return render_template('profile.html',keys=keys,museums=museums,userStats=stats,server=server[:-1])
+        return render_template('profile.html', keys=keys, museums=museums, userStats=stats, server=server[:-1])
     
     return redirect('/login')
                 
@@ -90,10 +90,10 @@ def show_user_profile():
 def show_results_page():
     if current_user.is_authenticated:
         keys = [t for t in sorted(museums.keys())]
-        return render_template('results.html',keys=keys,server=server[:-1])
+        return render_template('results.html', keys=keys, server=server[:-1])
     return redirect('/login')
 
-@app.route('/stats',methods=['GET'])
+@app.route('/stats', methods=['GET'])
 def get_museum_stats():
     tag = request.args['tag'].lower()
     
