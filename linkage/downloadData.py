@@ -1,5 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
-import os, sys, json
+import os, sys, json, time
 
 map = {'ulan':"http://vocab.getty.edu/sparql",
        'aac':"http://data.americanartcollaborative.org/sparql"}
@@ -8,7 +8,6 @@ files = os.listdir( os.path.join(os.path.dirname(os.path.realpath(__file__)),'sp
 
 if not os.path.exists('dataset'):
     os.makedirs('dataset')
-    
 
 # Iterate over all SPARQL files
 for f in files:
@@ -29,6 +28,7 @@ for f in files:
         
     sparql.setQuery(f_in.read())
     sparql.setReturnFormat(JSON)
+    sparql.setTimeout(360)
     results = sparql.query().convert()
     f_in.close()
                 
@@ -38,3 +38,5 @@ for f in files:
         out.write(json.dumps(entity))
         out.write("\n")
     out.close()
+    
+    time.sleep(60)

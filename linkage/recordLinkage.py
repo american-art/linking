@@ -14,7 +14,7 @@ class recordLinkage:
     basedatabase = "ulan"
     basedir = 'dataset'
     #get topN matches
-    topN = 3
+    topN = 2
     #block first N characters
     firstN = 2
     absdir = os.path.dirname(os.path.realpath(__file__))

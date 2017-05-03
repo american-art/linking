@@ -4,7 +4,7 @@ PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
 SELECT ?uri ?name ?byear
     WHERE 
     { 
-        GRAPH <http://data.americanartcollaborative.org/dma>
+        GRAPH <http://data.americanartcollaborative.org/aaa>
         {
             ?uri a crm:E39_Actor;
                  rdfs:label ?name.
