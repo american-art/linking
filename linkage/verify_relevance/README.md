@@ -1,3 +1,5 @@
+# Required: Python 2.7.X 
+
 ##Scripts to verify relevance of the URI matching generated
 
 ###calculate_precision.py

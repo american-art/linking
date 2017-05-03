@@ -1,3 +1,5 @@
+# Required: Python 2.7.X 
+
 ##Scripts to generate URI matches
 
 ###downloadData.py

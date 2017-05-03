@@ -1,6 +1,6 @@
 # Museum Link Verification
 
-1. Setup Virtual Environment for python 2.7.X.
+1. Setup Virtual Environment for python 2.7.X. or 3.X.Y
 
   ```
   pip install virtualenv
