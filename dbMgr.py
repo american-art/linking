@@ -115,6 +115,11 @@ def cleanDataset(resetDS):
             for a in answers:
                 dbC[dname]["answer"].delete_many({"_id":ObjectId(a)})
             dbC[dname]["question"].delete_many({"_id":ObjectId(q["_id"])})
+        
+        # Add new tag for dataset if doesn't exist already
+        tid = dbC[dname]["tag"].find_one({'tagname':dataset})
+        if tid == None:
+            dbC[dname]["tag"].insert_one({"tagname":dataset})
 
 #Tag
     #tagname, string
