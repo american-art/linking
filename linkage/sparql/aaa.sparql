@@ -13,5 +13,6 @@ SELECT ?uri ?name ?byear
                 ?o1 crm:P4_has_time-span ?o2.
                 ?o2 crm:P82a_begin_of_the_begin ?byear.
             }
+            FILTER regex(str(?uri), ".*person","i")
         }
     } 

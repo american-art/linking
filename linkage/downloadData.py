@@ -20,7 +20,7 @@ for f in files:
         continue
     
     # Send SPARQL query
-    if base == 'ulan':
+    if 'ulan' in base:
         sparql = SPARQLWrapper(map['ulan'])
     else:
         sparql = SPARQLWrapper(map['aac'])
