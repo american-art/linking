@@ -1,0 +1,22 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?uri ?raw_ulan ?curated_ulan
+    WHERE 
+    { 
+        GRAPH <http://data.americanartcollaborative.org/???>
+        {
+            ?uri a crm:E39_Actor.
+            OPTIONAL{
+                ?uri skos:exactMatch ?raw_ulan.
+            }
+        }
+        GRAPH <http://data.americanartcollaborative.org/curated_???>
+        {
+            OPTIONAL{
+                ?uri skos:exactMatch ?curated_ulan.
+            }
+        }
+    }

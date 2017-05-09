@@ -1,0 +1,77 @@
+Base is autry
+Querying  autry  dataset
+{
+    "aggregates": {
+        "F-Score": 1.0, 
+        "Precision": 1.0, 
+        "Recall": 1.0
+    }, 
+    "counts": {
+        "FN": 0, 
+        "FP": 0, 
+        "TN": 6, 
+        "TP": 55
+    }
+}
+Base is ccma
+Querying  ccma  dataset
+Connection to Sparql server failed! Trying again in five seconds!
+Querying  ccma  dataset
+{
+    "aggregates": {
+        "F-Score": 0.9995208433157643, 
+        "Precision": 0.9990421455938697, 
+        "Recall": 1.0
+    }, 
+    "counts": {
+        "FN": 0, 
+        "FP": 1, 
+        "TN": 0, 
+        "TP": 1043
+    }
+}
+Base is GM
+Querying  GM  dataset
+{
+    "aggregates": {
+        "F-Score": 0.9978213507625272, 
+        "Precision": 0.9956521739130435, 
+        "Recall": 1.0
+    }, 
+    "counts": {
+        "FN": 0, 
+        "FP": 1, 
+        "TN": 16, 
+        "TP": 229
+    }
+}
+Base is ima
+Querying  ima  dataset
+{
+    "aggregates": {
+        "F-Score": 0.9851239669421488, 
+        "Precision": 0.9706840390879479, 
+        "Recall": 1.0
+    }, 
+    "counts": {
+        "FN": 0, 
+        "FP": 18, 
+        "TN": 359, 
+        "TP": 596
+    }
+}
+Base is wam
+Querying  wam  dataset
+{
+    "aggregates": {
+        "F-Score": 0.9949748743718593, 
+        "Precision": 0.99, 
+        "Recall": 1.0
+    }, 
+    "counts": {
+        "FN": 0, 
+        "FP": 1, 
+        "TN": 26, 
+        "TP": 99
+    }
+}
