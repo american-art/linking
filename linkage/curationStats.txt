@@ -1,77 +1,212 @@
-Base is autry
-Querying  autry  dataset
+Base is aaa
 {
     "aggregates": {
-        "F-Score": 1.0, 
-        "Precision": 1.0, 
-        "Recall": 1.0
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
     }, 
     "counts": {
-        "FN": 0, 
-        "FP": 0, 
-        "TN": 6, 
-        "TP": 55
+        "missed": 0, 
+        "new-right": 0, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
+    }
+}
+Base is acm
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 0, 
+        "new-right": 377, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
+    }
+}
+Base is autry
+{
+    "aggregates": {
+        "F-Score": 0.8593750000000001, 
+        "Precision": 1.0, 
+        "Recall": 0.7534246575342466
+    }, 
+    "counts": {
+        "missed": 18, 
+        "new-right": 6, 
+        "old-right": 55, 
+        "old-wrong/new-wrong": 0
+    }
+}
+Base is cbm
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 0, 
+        "new-right": 354, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
     }
 }
 Base is ccma
-Querying  ccma  dataset
-Connection to Sparql server failed! Trying again in five seconds!
-Querying  ccma  dataset
+aac uri :http://data.americanartcollaborative.org/ccma/constituent/363 raw ulan : http://vocab.getty.edu/ulan/500283741 curated ulan : http://vocab.getty.edu/ulan/500083859
 {
     "aggregates": {
-        "F-Score": 0.9995208433157643, 
+        "F-Score": 0.9914448669201521, 
         "Precision": 0.9990421455938697, 
-        "Recall": 1.0
+        "Recall": 0.9839622641509433
     }, 
     "counts": {
-        "FN": 0, 
-        "FP": 1, 
-        "TN": 0, 
-        "TP": 1043
+        "missed": 17, 
+        "new-right": 0, 
+        "old-right": 1043, 
+        "old-wrong/new-wrong": 1
+    }
+}
+Base is dma
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 0, 
+        "new-right": 358, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
     }
 }
 Base is GM
-Querying  GM  dataset
+aac uri :http://data.americanartcollaborative.org/GM/constituent/carl_kauba raw ulan : http://vocab.getty.edu/ulan/500085707 curated ulan : http://vocab.getty.edu/ulan/500357472
 {
     "aggregates": {
-        "F-Score": 0.9978213507625272, 
+        "F-Score": 0.9233870967741935, 
         "Precision": 0.9956521739130435, 
-        "Recall": 1.0
+        "Recall": 0.8609022556390977
     }, 
     "counts": {
-        "FN": 0, 
-        "FP": 1, 
-        "TN": 16, 
-        "TP": 229
+        "missed": 37, 
+        "new-right": 16, 
+        "old-right": 229, 
+        "old-wrong/new-wrong": 1
     }
 }
 Base is ima
-Querying  ima  dataset
+aac uri :http://data.americanartcollaborative.org/ima/actor/628704 raw ulan : http://vocab.getty.edu/ulan/500029333 curated ulan : http://vocab.getty.edu/ulan/500115501
+aac uri :http://data.americanartcollaborative.org/ima/actor/600255 raw ulan : http://vocab.getty.edu/ulan/500000262 curated ulan : http://vocab.getty.edu/ulan/500124131
+aac uri :http://data.americanartcollaborative.org/ima/actor/652246 raw ulan : http://vocab.getty.edu/ulan/500055073 curated ulan : http://vocab.getty.edu/ulan/500124333
+aac uri :http://data.americanartcollaborative.org/ima/actor/624825 raw ulan : http://vocab.getty.edu/ulan/500025377 curated ulan : http://vocab.getty.edu/ulan/500126800
+aac uri :http://data.americanartcollaborative.org/ima/actor/612882 raw ulan : http://vocab.getty.edu/ulan/500013191 curated ulan : http://vocab.getty.edu/ulan/500018324
+aac uri :http://data.americanartcollaborative.org/ima/actor/629972 raw ulan : http://vocab.getty.edu/ulan/500030629 curated ulan : http://vocab.getty.edu/ulan/500331833
+aac uri :http://data.americanartcollaborative.org/ima/actor/625842 raw ulan : http://vocab.getty.edu/ulan/500026419 curated ulan : http://vocab.getty.edu/ulan/500126201
+aac uri :http://data.americanartcollaborative.org/ima/actor/705414 raw ulan : http://vocab.getty.edu/ulan/500109096 curated ulan : http://vocab.getty.edu/ulan/500127102
+aac uri :http://data.americanartcollaborative.org/ima/actor/677623 raw ulan : http://vocab.getty.edu/ulan/500081027 curated ulan : http://vocab.getty.edu/ulan/500030635
+aac uri :http://data.americanartcollaborative.org/ima/actor/628702 raw ulan : http://vocab.getty.edu/ulan/500029331 curated ulan : http://vocab.getty.edu/ulan/500011660
+aac uri :http://data.americanartcollaborative.org/ima/actor/619925 raw ulan : http://vocab.getty.edu/ulan/500020372 curated ulan : http://vocab.getty.edu/ulan/500030726
+aac uri :http://data.americanartcollaborative.org/ima/actor/668234 raw ulan : http://vocab.getty.edu/ulan/500071541 curated ulan : http://vocab.getty.edu/ulan/500113151
+aac uri :http://data.americanartcollaborative.org/ima/actor/632511 raw ulan : http://vocab.getty.edu/ulan/500033231 curated ulan : http://vocab.getty.edu/ulan/500018011
+aac uri :http://data.americanartcollaborative.org/ima/actor/699248 raw ulan : http://vocab.getty.edu/ulan/500102867 curated ulan : http://vocab.getty.edu/ulan/500102866
+aac uri :http://data.americanartcollaborative.org/ima/actor/696020 raw ulan : http://vocab.getty.edu/ulan/500099608 curated ulan : http://vocab.getty.edu/ulan/500124253
+aac uri :http://data.americanartcollaborative.org/ima/actor/612698 raw ulan : http://vocab.getty.edu/ulan/500013004 curated ulan : http://vocab.getty.edu/ulan/500043511
+aac uri :http://data.americanartcollaborative.org/ima/actor/709772 raw ulan : http://vocab.getty.edu/ulan/500114666 curated ulan : http://vocab.getty.edu/ulan/500124218
+aac uri :http://data.americanartcollaborative.org/ima/actor/615745 raw ulan : http://vocab.getty.edu/ulan/500016106 curated ulan : http://vocab.getty.edu/ulan/500028547
 {
     "aggregates": {
-        "F-Score": 0.9851239669421488, 
+        "F-Score": 0.9400630914826498, 
         "Precision": 0.9706840390879479, 
-        "Recall": 1.0
+        "Recall": 0.9113149847094801
     }, 
     "counts": {
-        "FN": 0, 
-        "FP": 18, 
-        "TN": 359, 
-        "TP": 596
+        "missed": 58, 
+        "new-right": 359, 
+        "old-right": 596, 
+        "old-wrong/new-wrong": 18
+    }
+}
+Base is nmwa
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 0, 
+        "new-right": 135, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
+    }
+}
+Base is npg
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 0, 
+        "new-right": 1919, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
+    }
+}
+Base is puam
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 1174, 
+        "new-right": 0, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
+    }
+}
+Base is saam
+{
+    "aggregates": {
+        "F-Score": 0.0, 
+        "Precision": 0.0, 
+        "Recall": 0.0
+    }, 
+    "counts": {
+        "missed": 0, 
+        "new-right": 3769, 
+        "old-right": 0, 
+        "old-wrong/new-wrong": 0
     }
 }
 Base is wam
-Querying  wam  dataset
+aac uri :http://data.thewalters.org/constituent/5886 raw ulan : http://vocab.getty.edu/ulan/500119517 curated ulan : http://vocab.getty.edu/ulan/500110876
 {
     "aggregates": {
-        "F-Score": 0.9949748743718593, 
+        "F-Score": 0.9658536585365853, 
         "Precision": 0.99, 
-        "Recall": 1.0
+        "Recall": 0.9428571428571428
     }, 
     "counts": {
-        "FN": 0, 
-        "FP": 1, 
-        "TN": 26, 
-        "TP": 99
+        "missed": 6, 
+        "new-right": 26, 
+        "old-right": 99, 
+        "old-wrong/new-wrong": 1
     }
+}
+
+Total 
+
+{
+    "missed": 1310, 
+    "new-right": 7319, 
+    "old-right": 2022, 
+    "old-wrong/new-wrong": 21
 }

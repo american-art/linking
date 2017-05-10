@@ -1,0 +1,128 @@
+Base is aaa
+{
+    "E22_Man-Made_Object": "0", 
+    "E39_Actor": "6944", 
+    "E53_Place": "1592", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "210360"
+}
+Base is acm
+{
+    "E22_Man-Made_Object": "6421", 
+    "E39_Actor": "772", 
+    "E53_Place": "532", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "225528"
+}
+Base is autry
+{
+    "E22_Man-Made_Object": "193", 
+    "E39_Actor": "114", 
+    "E53_Place": "0", 
+    "E5_Event": "0", 
+    "labels": "73", 
+    "triples": "14639"
+}
+Base is cbm
+{
+    "E22_Man-Made_Object": "1691", 
+    "E39_Actor": "513", 
+    "E53_Place": "0", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "96533"
+}
+Base is ccma
+{
+    "E22_Man-Made_Object": "8217", 
+    "E39_Actor": "2005", 
+    "E53_Place": "0", 
+    "E5_Event": "0", 
+    "labels": "1060", 
+    "triples": "456711"
+}
+Base is dma
+{
+    "E22_Man-Made_Object": "2229", 
+    "E39_Actor": "649", 
+    "E53_Place": "0", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "114184"
+}
+Base is GM
+{
+    "E22_Man-Made_Object": "20904", 
+    "E39_Actor": "1198", 
+    "E53_Place": "4159", 
+    "E5_Event": "0", 
+    "labels": "266", 
+    "triples": "1851246"
+}
+Base is ima
+{
+    "E22_Man-Made_Object": "22314", 
+    "E39_Actor": "2077", 
+    "E53_Place": "432", 
+    "E5_Event": "0", 
+    "labels": "671", 
+    "triples": "846952"
+}
+Base is nmwa
+{
+    "E22_Man-Made_Object": "2208", 
+    "E39_Actor": "375", 
+    "E53_Place": "0", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "83486"
+}
+Base is npg
+{
+    "E22_Man-Made_Object": "16829", 
+    "E39_Actor": "12552", 
+    "E53_Place": "5713", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "1902699"
+}
+Base is puam
+{
+    "E22_Man-Made_Object": "13314", 
+    "E39_Actor": "2866", 
+    "E53_Place": "881", 
+    "E5_Event": "0", 
+    "labels": "1174", 
+    "triples": "1253239"
+}
+Base is saam
+{
+    "E22_Man-Made_Object": "43038", 
+    "E39_Actor": "12439", 
+    "E53_Place": "3042", 
+    "E5_Event": "0", 
+    "labels": "0", 
+    "triples": "2597938"
+}
+Base is wam
+{
+    "E22_Man-Made_Object": "801", 
+    "E39_Actor": "181", 
+    "E53_Place": "159", 
+    "E5_Event": "0", 
+    "labels": "105", 
+    "triples": "60136"
+}
+
+Total 
+
+{
+    "E22_Man-Made_Object": 138159, 
+    "E39_Actor": 42685, 
+    "E53_Place": 16510, 
+    "E5_Event": 0, 
+    "labels": 3349, 
+    "triples": 9713651
+}
