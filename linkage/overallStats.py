@@ -2,7 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from urllib2 import URLError
 import os, sys, json, time
 
-classes = ["E39_Actor","E22_Man-Made_Object","E5_Event","E53_Place","triples","labels"]
+classes = ["E39_Actor","E22_Man-Made_Object","E12_Production","E53_Place","triples","labels"]
 bases = ["aaa","acm","autry","cbm","ccma","dma","GM","ima","nmwa","npg","puam","saam","wam"]
 out = {"total":{}}
 f_in = open("overallStats.sparql", 'r')
