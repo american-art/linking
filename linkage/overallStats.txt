@@ -1,128 +1,137 @@
 Base is aaa
 {
-    "E12_Production": "0", 
-    "E22_Man-Made_Object": "0", 
-    "E39_Actor": "6944", 
-    "E53_Place": "1592", 
-    "labels": "0", 
-    "triples": "210360"
+    "constituents": 6944, 
+    "events": 7301, 
+    "labels": 0, 
+    "objects": 0, 
+    "places": 1592, 
+    "triples": 210360
 }
 Base is acm
 {
-    "E12_Production": "6071", 
-    "E22_Man-Made_Object": "6421", 
-    "E39_Actor": "772", 
-    "E53_Place": "532", 
-    "labels": "0", 
-    "triples": "225528"
+    "constituents": 806, 
+    "events": 13164, 
+    "labels": 0, 
+    "objects": 6421, 
+    "places": 532, 
+    "triples": 225528
 }
 Base is autry
 {
-    "E12_Production": "192", 
-    "E22_Man-Made_Object": "193", 
-    "E39_Actor": "114", 
-    "E53_Place": "0", 
-    "labels": "73", 
-    "triples": "14639"
+    "constituents": 148, 
+    "events": 558, 
+    "labels": 73, 
+    "objects": 193, 
+    "places": 0, 
+    "triples": 14639
 }
 Base is cbm
 {
-    "E12_Production": "1692", 
-    "E22_Man-Made_Object": "1691", 
-    "E39_Actor": "513", 
-    "E53_Place": "0", 
-    "labels": "0", 
-    "triples": "96533"
+    "constituents": 514, 
+    "events": 3384, 
+    "labels": 0, 
+    "objects": 1691, 
+    "places": 0, 
+    "triples": 96533
 }
 Base is ccma
 {
-    "E12_Production": "8217", 
-    "E22_Man-Made_Object": "8217", 
-    "E39_Actor": "2005", 
-    "E53_Place": "0", 
-    "labels": "1060", 
-    "triples": "456711"
+    "constituents": 2210, 
+    "events": 18905, 
+    "labels": 1060, 
+    "objects": 8217, 
+    "places": 0, 
+    "triples": 456711
 }
 Base is dma
 {
-    "E12_Production": "2223", 
-    "E22_Man-Made_Object": "2229", 
-    "E39_Actor": "649", 
-    "E53_Place": "0", 
-    "labels": "0", 
-    "triples": "114184"
+    "constituents": 1299, 
+    "events": 5639, 
+    "labels": 0, 
+    "objects": 2229, 
+    "places": 0, 
+    "triples": 114184
 }
 Base is GM
 {
-    "E12_Production": "20531", 
-    "E22_Man-Made_Object": "20904", 
-    "E39_Actor": "1198", 
-    "E53_Place": "4159", 
-    "labels": "266", 
-    "triples": "1851246"
+    "constituents": 1578, 
+    "events": 83603, 
+    "labels": 266, 
+    "objects": 20904, 
+    "places": 4159, 
+    "triples": 1851246
 }
 Base is ima
 {
-    "E12_Production": "11157", 
-    "E22_Man-Made_Object": "22314", 
-    "E39_Actor": "2077", 
-    "E53_Place": "432", 
-    "labels": "671", 
-    "triples": "846952"
+    "constituents": 2131, 
+    "events": 34560, 
+    "labels": 671, 
+    "objects": 22314, 
+    "places": 432, 
+    "triples": 846952
 }
 Base is nmwa
 {
-    "E12_Production": "0", 
-    "E22_Man-Made_Object": "2208", 
-    "E39_Actor": "375", 
-    "E53_Place": "0", 
-    "labels": "0", 
-    "triples": "83486"
+    "constituents": 376, 
+    "events": 2226, 
+    "labels": 0, 
+    "objects": 2208, 
+    "places": 0, 
+    "triples": 83486
 }
 Base is npg
 {
-    "E12_Production": "16669", 
-    "E22_Man-Made_Object": "16829", 
-    "E39_Actor": "12552", 
-    "E53_Place": "5713", 
-    "labels": "0", 
-    "triples": "1902699"
+    "constituents": 12553, 
+    "events": 54097, 
+    "labels": 0, 
+    "objects": 16829, 
+    "places": 5713, 
+    "triples": 1902699
 }
 Base is puam
 {
-    "E12_Production": "13314", 
-    "E22_Man-Made_Object": "13314", 
-    "E39_Actor": "2866", 
-    "E53_Place": "881", 
-    "labels": "1174", 
-    "triples": "1253239"
+    "constituents": 2899, 
+    "events": 43828, 
+    "labels": 1174, 
+    "objects": 13314, 
+    "places": 881, 
+    "triples": 1253239
 }
 Base is saam
 {
-    "E12_Production": "42769", 
-    "E22_Man-Made_Object": "43038", 
-    "E39_Actor": "12439", 
-    "E53_Place": "3042", 
-    "labels": "0", 
-    "triples": "2597938"
+    "constituents": 20490, 
+    "events": 106534, 
+    "labels": 0, 
+    "objects": 43038, 
+    "places": 3042, 
+    "triples": 2597938
 }
 Base is wam
 {
-    "E12_Production": "800", 
-    "E22_Man-Made_Object": "801", 
-    "E39_Actor": "181", 
-    "E53_Place": "159", 
-    "labels": "105", 
-    "triples": "60136"
+    "constituents": 182, 
+    "events": 1722, 
+    "labels": 105, 
+    "objects": 801, 
+    "places": 159, 
+    "triples": 60136
+}
+Base is YCBA
+{
+    "constituents": 0,
+    "events": 132,
+    "labels": 0,
+    "objects": 47,
+    "places": 0,
+    "triples": 6496
 }
 
 Total 
 
 {
-    "E12_Production": 123635, 
-    "E22_Man-Made_Object": 138159, 
-    "E39_Actor": 42685, 
-    "E53_Place": 16510, 
+    "constituents": 52130, 
+    "events": 375653, 
     "labels": 3349, 
-    "triples": 9713651
+    "objects": 138206, 
+    "places": 16510, 
+    "triples": 9720147
 }
